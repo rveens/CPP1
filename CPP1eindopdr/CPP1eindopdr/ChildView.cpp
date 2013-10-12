@@ -33,6 +33,8 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_LBUTTONUP()
 	ON_COMMAND(ID_SHAPE_RECTANGLE, &CChildView::OnShapeRectangle)
 	ON_COMMAND(ID_SHAPE_CIRCLE, &CChildView::OnShapeCircle)
+	ON_COMMAND(ID_FILE_SAVE32775, &CChildView::OnFileSave32775)
+	ON_COMMAND(ID_FILE_OPEN32777, &CChildView::OnFileOpen32777)
 END_MESSAGE_MAP()
 
 
@@ -105,4 +107,45 @@ void CChildView::OnShapeRectangle()
 void CChildView::OnShapeCircle()
 {
 	dapp->SetCurrentDrawShape(new Shapes::Circle());
+}
+
+
+void CChildView::OnFileSave32775()
+{
+	CFile f;
+
+	CFileDialog sd(FALSE/*SaveFileDialog*/, _T("diagram"), _T("*.diagram"),
+    OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT , NULL, NULL, 0,
+    TRUE/*bVistaStyle*/);
+	IFileSaveDialog *saveDlgPtr = sd.GetIFileSaveDialog();
+
+	if (saveDlgPtr != NULL) {
+		saveDlgPtr->SetOptions(FOS_PICKFOLDERS);
+		saveDlgPtr->Release();
+	}
+
+	if (sd.DoModal() == IDOK) {
+		TRACE(sd.GetPathName());
+	}
+}
+
+
+void CChildView::OnFileOpen32777()
+{
+	CFile f;
+
+	CFileDialog od(TRUE/*bOpenFileDialog*/, _T("diagram"), _T("*.diagram"),
+    OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT , NULL, NULL, 0,
+    TRUE/*bVistaStyle*/);
+	IFileOpenDialog *openDlgPtr = od.GetIFileOpenDialog();
+
+	if (openDlgPtr != NULL) {
+		openDlgPtr->SetOptions(FOS_PICKFOLDERS);
+		openDlgPtr->Release();
+	}
+
+	if (od.DoModal() == IDOK) {
+		TRACE(od.GetPathName());
+	}
+
 }

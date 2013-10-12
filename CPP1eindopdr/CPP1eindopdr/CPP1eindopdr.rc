@@ -102,6 +102,8 @@ IDR_MAINFRAME MENU
 BEGIN
     POPUP "&File"
     BEGIN
+        MENUITEM "Open...",                     ID_FILE_OPEN32777
+        MENUITEM "Save...",                     ID_FILE_SAVE32775
         MENUITEM "E&xit",                       ID_APP_EXIT
     END
     POPUP "&Edit"

@@ -41,4 +41,6 @@ public:
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnShapeRectangle();
 	afx_msg void OnShapeCircle();
+	afx_msg void OnFileSave32775();
+	afx_msg void OnFileOpen32777();
 };
