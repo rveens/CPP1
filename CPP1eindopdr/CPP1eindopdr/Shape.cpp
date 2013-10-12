@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ChildView.h"
 #include "Shape.h"
+#include <sstream>
 
 
 Shapes::Shape::Shape()
@@ -25,3 +26,21 @@ void Shapes::Shape::SetPoints(CPoint start, CPoint end)
 	this->start = start;
 	this->end = end;
 }
+
+std::string Shapes::Shape::toString() const
+{
+	std::stringstream ss;
+	
+	ss << "startx: " << this->start.x << " starty:" << this->start.y << std::endl;
+	ss << "endx: " << this->end.x << " endy:" << this->end.y << std::endl;
+	//ss << "pen: " << this->pen;
+	
+	return ss.str();
+}
+
+/* let op globale scope, in shape staat een declaratie met friend. */
+std::ostream& operator<<(std::ostream& stream, const Shapes::Shape& shape)
+{
+	return stream << shape.toString();
+}
+

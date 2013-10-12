@@ -39,9 +39,14 @@ void DrawApplication::StopSelection(CPoint endpoint)
 
 	/* sla de huidige op in de savedShapes lijst. */
 	this->savedShapes->push_back(selectionDrawShape);
+
+	if (this->selectionDrawShape) {
+		std::string s = this->selectionDrawShape->toString();
+		TRACE(s.c_str());
+	}
 	
 	/* Zet de huidige selectie pointer op null. */
-	//this->selectionDrawShape = nullptr;
+	this->selectionDrawShape = nullptr;
 
 	this->startPoint.x = -1;
 	this->endPoint.x = -1;
