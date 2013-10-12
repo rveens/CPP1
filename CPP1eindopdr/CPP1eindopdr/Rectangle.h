@@ -12,6 +12,6 @@ namespace Shapes {
 	public:
 		Rectangle();
 		virtual ~Rectangle(void);
-		void Draw(CDC *pDC, CPoint begin, CPoint end);
+		void Draw(CDC *pDC);
 	};
 }

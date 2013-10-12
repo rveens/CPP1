@@ -12,6 +12,6 @@ namespace Shapes {
 	public:
 		Circle();
 		virtual ~Circle(void);
-		void Draw(CDC *pDC, CPoint begin, CPoint end);
+		void Draw(CDC *pDC);
 	};
 }

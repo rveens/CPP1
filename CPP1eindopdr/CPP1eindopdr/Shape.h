@@ -8,8 +8,11 @@ namespace Shapes {
 	public:
 		Shape();
 		virtual ~Shape(void);
-		virtual void Draw(CDC *pDC, CPoint start, CPoint end) = 0;
+		virtual void Draw(CDC *pDC) = 0;
+		void SetPoints(CPoint start, CPoint end);
 	protected:
 		CPen pen;
+		CPoint start;
+		CPoint end;
 	};
 }

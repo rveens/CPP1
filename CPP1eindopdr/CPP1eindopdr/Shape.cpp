@@ -5,15 +5,23 @@
 
 Shapes::Shape::Shape()
 {
-	pen.CreatePen(PS_DOT, 1, RGB(255,0,0));
+	pen.CreatePen(PS_DOT, 1, RGB(0,0,0));
 }
 
 Shapes::Shape::~Shape(void)
 {
 }
 
-void Shapes::Shape::Draw(CDC *pDC, CPoint start, CPoint end)
+void Shapes::Shape::Draw(CDC *pDC)
 {
+	this->start = start;
+	this->end = end;
 	pDC->SetROP2(R2_NOTXORPEN);
 	pDC->SelectObject(&pen);
+}
+
+void Shapes::Shape::SetPoints(CPoint start, CPoint end)
+{
+	this->start = start;
+	this->end = end;
 }

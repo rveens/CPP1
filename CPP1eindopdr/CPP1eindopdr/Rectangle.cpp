@@ -11,9 +11,9 @@ Shapes::Rectangle::~Rectangle(void)
 {
 }
 
-void Shapes::Rectangle::Draw(CDC *pDC, CPoint start, CPoint end)
+void Shapes::Rectangle::Draw(CDC *pDC)
 {
-	Shapes::Shape::Draw(pDC, start, end);
+	Shapes::Shape::Draw(pDC);
 
 	pDC->Rectangle(start.x, start.y, end.x, end.y);
 }

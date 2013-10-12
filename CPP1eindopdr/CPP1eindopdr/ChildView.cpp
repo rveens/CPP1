@@ -58,7 +58,9 @@ void CChildView::OnPaint()
 
 	CDC *pDC = GetDC();
 
-	pDC->LineTo(50, 50);
+	dapp->DrawSavedShapes(pDC);
+
+	ReleaseDC(pDC);
 
 	// TODO: Add your message handler code here
 	

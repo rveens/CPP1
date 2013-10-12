@@ -15,6 +15,7 @@ DrawApplication::DrawApplication(void)
 
 DrawApplication::~DrawApplication(void)
 {
+	// FIXME vector waardes deleten.
 	delete history;
 	delete savedShapes;
 	delete selectionDrawShape;
@@ -35,6 +36,13 @@ void DrawApplication::StartSelection(CPoint startpoint)
 void DrawApplication::StopSelection(CPoint endpoint)
 {
 	// TODO save drawing points into a shape variable.
+
+	/* sla de huidige op in de savedShapes lijst. */
+	this->savedShapes->push_back(selectionDrawShape);
+	
+	/* Zet de huidige selectie pointer op null. */
+	//this->selectionDrawShape = nullptr;
+
 	this->startPoint.x = -1;
 	this->endPoint.x = -1;
 }
@@ -44,11 +52,14 @@ void DrawApplication::DrawSelection(CDC *pDC, CPoint currentMousePosition)
 	if (startPoint.x != -1 && this->selectionDrawShape)
 	{
 		// Trek vorige vorm over. 2 x XOR geeft oorspronkelijke waarde
-		if (endPoint.x != -1)
-			this->selectionDrawShape->Draw(pDC, startPoint, endPoint);
+		if (endPoint.x != -1) {
+			this->selectionDrawShape->SetPoints(startPoint, endPoint);
+			this->selectionDrawShape->Draw(pDC);
+		}
 
 		// Teken huidige vorm met XOR
-		this->selectionDrawShape->Draw(pDC, startPoint, currentMousePosition);
+		this->selectionDrawShape->SetPoints(startPoint, currentMousePosition);
+		this->selectionDrawShape->Draw(pDC);
 		endPoint = currentMousePosition;
 	}
 }
@@ -60,5 +71,5 @@ void DrawApplication::DrawSavedShapes(CDC *pDC)
 	end = this->savedShapes->end();
 
 	for (it = this->savedShapes->begin(); it != end; ++it)
-		; //(*it)->Draw(pDC, x, y); TODO tekenwaardes opslaan bij shape.
+		(*it)->Draw(pDC); // TODO tekenwaardes opslaan bij shape.
 }

@@ -11,9 +11,9 @@ Shapes::Circle::~Circle(void)
 {
 }
 
-void Shapes::Circle::Draw(CDC *pDC, CPoint start, CPoint end)
+void Shapes::Circle::Draw(CDC *pDC)
 {
-	Shapes::Shape::Draw(pDC, start, end);
+	Shapes::Shape::Draw(pDC);
 
 	pDC->Ellipse(start.x, start.y, end.x, end.y);
 }
