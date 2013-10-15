@@ -10,6 +10,7 @@
 #endif
 
 #include "EindOpdrDoc.h"
+#include <fstream>
 
 #include <propkey.h>
 
@@ -76,10 +77,10 @@ void CEindOpdrDoc::StopSelection(CPoint endpoint)
 	/* sla de huidige op in de savedShapes lijst. */
 	this->savedShapes->push_back(selectionDrawShape);
 
-	if (this->selectionDrawShape) {
+	/*if (this->selectionDrawShape) {
 		std::string s = this->selectionDrawShape->toString();
 		TRACE(s.c_str());
-	}
+	}*/
 	
 	/* Zet de huidige selectie pointer op null. */
 	this->selectionDrawShape = nullptr;
@@ -121,9 +122,19 @@ void CEindOpdrDoc::DrawSavedShapes(CDC *pDC)
 
 void CEindOpdrDoc::Serialize(CArchive& ar)
 {
+	/* base classe functie eerst aanroepen volgens http://msdn.microsoft.com/en-us/library/00hh13h0.aspx */
+	CObject::Serialize(ar);
+
+	CString s = ar.GetFile()->GetFilePath();
+
 	if (ar.IsStoring())
 	{
 		// TODO: add storing code here
+		std::ofstream myfile;
+		myfile.open(ar.GetFile()->GetFilePath(), std::ios::out);
+		if (myfile.is_open())
+			myfile << "Writing this to a file.\n";
+		myfile.close();
 	}
 	else
 	{

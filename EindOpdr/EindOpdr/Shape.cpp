@@ -36,10 +36,3 @@ std::string Shapes::Shape::toString() const
 	
 	return ss.str();
 }
-
-/* let op globale scope, in shape staat een declaratie met friend. */
-std::ostream& operator<<(std::ostream& stream, const Shapes::Shape& shape)
-{
-	return stream << shape.toString();
-}
-
