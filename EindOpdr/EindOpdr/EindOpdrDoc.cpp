@@ -1,0 +1,203 @@
+
+// EindOpdrDoc.cpp : implementation of the CEindOpdrDoc class
+//
+
+#include "stdafx.h"
+// SHARED_HANDLERS can be defined in an ATL project implementing preview, thumbnail
+// and search filter handlers and allows sharing of document code with that project.
+#ifndef SHARED_HANDLERS
+#include "EindOpdr.h"
+#endif
+
+#include "EindOpdrDoc.h"
+
+#include <propkey.h>
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#endif
+
+// CEindOpdrDoc
+
+IMPLEMENT_DYNCREATE(CEindOpdrDoc, CDocument)
+
+BEGIN_MESSAGE_MAP(CEindOpdrDoc, CDocument)
+END_MESSAGE_MAP()
+
+
+// CEindOpdrDoc construction/destruction
+
+CEindOpdrDoc::CEindOpdrDoc()
+{
+	// TODO: add one-time construction code here
+	history = new std::vector<Shapes::Shape *>();
+	savedShapes = new std::vector<Shapes::Shape *>();
+	startPoint.x = -1;
+	endPoint.x = -1;
+
+	// Set default selection shape
+	this->selectionDrawShape = new Shapes::Rectangle();
+}
+
+CEindOpdrDoc::~CEindOpdrDoc()
+{
+	delete history;
+	delete savedShapes;
+	delete selectionDrawShape;
+}
+
+BOOL CEindOpdrDoc::OnNewDocument()
+{
+	if (!CDocument::OnNewDocument())
+		return FALSE;
+
+	// TODO: add reinitialization code here
+	// (SDI documents will reuse this document)
+
+	return TRUE;
+}
+
+void CEindOpdrDoc::SetCurrentDrawShape(Shapes::Shape *s)
+{
+	if (this->selectionDrawShape)
+		delete this->selectionDrawShape;
+	this->selectionDrawShape = s;
+}
+
+void CEindOpdrDoc::StartSelection(CPoint startpoint)
+{
+	this->startPoint = startpoint;
+}
+
+void CEindOpdrDoc::StopSelection(CPoint endpoint)
+{
+	// TODO save drawing points into a shape variable.
+
+	/* sla de huidige op in de savedShapes lijst. */
+	this->savedShapes->push_back(selectionDrawShape);
+
+	if (this->selectionDrawShape) {
+		std::string s = this->selectionDrawShape->toString();
+		TRACE(s.c_str());
+	}
+	
+	/* Zet de huidige selectie pointer op null. */
+	this->selectionDrawShape = nullptr;
+
+	this->startPoint.x = -1;
+	this->endPoint.x = -1;
+}
+
+void CEindOpdrDoc::DrawSelection(CDC *pDC, CPoint currentMousePosition)
+{
+	if (startPoint.x != -1 && this->selectionDrawShape)
+	{
+		// Trek vorige vorm over. 2 x XOR geeft oorspronkelijke waarde
+		if (endPoint.x != -1) {
+			this->selectionDrawShape->SetPoints(startPoint, endPoint);
+			this->selectionDrawShape->Draw(pDC);
+		}
+
+		// Teken huidige vorm met XOR
+		this->selectionDrawShape->SetPoints(startPoint, currentMousePosition);
+		this->selectionDrawShape->Draw(pDC);
+		endPoint = currentMousePosition;
+	}
+}
+
+void CEindOpdrDoc::DrawSavedShapes(CDC *pDC)
+{
+	std::vector<Shapes::Shape*>::iterator it, end;
+	
+	end = this->savedShapes->end();
+
+	for (it = this->savedShapes->begin(); it != end; ++it)
+		(*it)->Draw(pDC); // TODO tekenwaardes opslaan bij shape.
+}
+
+
+
+// CEindOpdrDoc serialization
+
+void CEindOpdrDoc::Serialize(CArchive& ar)
+{
+	if (ar.IsStoring())
+	{
+		// TODO: add storing code here
+	}
+	else
+	{
+		// TODO: add loading code here
+	}
+}
+
+#ifdef SHARED_HANDLERS
+
+// Support for thumbnails
+void CEindOpdrDoc::OnDrawThumbnail(CDC& dc, LPRECT lprcBounds)
+{
+	// Modify this code to draw the document's data
+	dc.FillSolidRect(lprcBounds, RGB(255, 255, 255));
+
+	CString strText = _T("TODO: implement thumbnail drawing here");
+	LOGFONT lf;
+
+	CFont* pDefaultGUIFont = CFont::FromHandle((HFONT) GetStockObject(DEFAULT_GUI_FONT));
+	pDefaultGUIFont->GetLogFont(&lf);
+	lf.lfHeight = 36;
+
+	CFont fontDraw;
+	fontDraw.CreateFontIndirect(&lf);
+
+	CFont* pOldFont = dc.SelectObject(&fontDraw);
+	dc.DrawText(strText, lprcBounds, DT_CENTER | DT_WORDBREAK);
+	dc.SelectObject(pOldFont);
+}
+
+// Support for Search Handlers
+void CEindOpdrDoc::InitializeSearchContent()
+{
+	CString strSearchContent;
+	// Set search contents from document's data. 
+	// The content parts should be separated by ";"
+
+	// For example:  strSearchContent = _T("point;rectangle;circle;ole object;");
+	SetSearchContent(strSearchContent);
+}
+
+void CEindOpdrDoc::SetSearchContent(const CString& value)
+{
+	if (value.IsEmpty())
+	{
+		RemoveChunk(PKEY_Search_Contents.fmtid, PKEY_Search_Contents.pid);
+	}
+	else
+	{
+		CMFCFilterChunkValueImpl *pChunk = NULL;
+		ATLTRY(pChunk = new CMFCFilterChunkValueImpl);
+		if (pChunk != NULL)
+		{
+			pChunk->SetTextValue(PKEY_Search_Contents, value, CHUNK_TEXT);
+			SetChunkValue(pChunk);
+		}
+	}
+}
+
+#endif // SHARED_HANDLERS
+
+// CEindOpdrDoc diagnostics
+
+#ifdef _DEBUG
+void CEindOpdrDoc::AssertValid() const
+{
+	CDocument::AssertValid();
+}
+
+void CEindOpdrDoc::Dump(CDumpContext& dc) const
+{
+	CDocument::Dump(dc);
+}
+#endif //_DEBUG
+
+
+// CEindOpdrDoc commands
