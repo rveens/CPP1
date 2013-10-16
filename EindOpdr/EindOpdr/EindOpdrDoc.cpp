@@ -11,6 +11,7 @@
 
 #include "EindOpdrDoc.h"
 #include <fstream>
+#include <string>
 
 #include <propkey.h>
 
@@ -122,24 +123,40 @@ void CEindOpdrDoc::DrawSavedShapes(CDC *pDC)
 
 void CEindOpdrDoc::Serialize(CArchive& ar)
 {
-	/* base classe functie eerst aanroepen volgens http://msdn.microsoft.com/en-us/library/00hh13h0.aspx */
-	CObject::Serialize(ar);
+	
+}
 
-	CString s = ar.GetFile()->GetFilePath();
+BOOL CEindOpdrDoc::OnOpenDocument(LPCTSTR lpszPathName)
+{
+	if (!CDocument::OnOpenDocument(lpszPathName))
+		return FALSE;
 
-	if (ar.IsStoring())
-	{
-		// TODO: add storing code here
-		std::ofstream myfile;
-		myfile.open(ar.GetFile()->GetFilePath(), std::ios::out);
-		if (myfile.is_open())
-			myfile << "Writing this to a file.\n";
-		myfile.close();
-	}
-	else
-	{
-		// TODO: add loading code here
-	}
+	std::wstring s_wstr(lpszPathName);
+	std::ifstream ifs (s_wstr, std::ifstream::in);
+	if (ifs) {
+		//ifs >> ...;
+		ifs.close();
+		return TRUE;
+	} else
+		return FALSE;;
+
+	return 0;
+}
+
+BOOL CEindOpdrDoc::OnSaveDocument(LPCTSTR lpszPathName)
+{
+	if (!CDocument::OnSaveDocument(lpszPathName))
+		return FALSE;
+
+	std::wstring s_wstr(lpszPathName);
+
+	std::ofstream ofs (s_wstr, std::ofstream::out);
+	if (ofs) {
+		ofs << "lorem ipsum";
+		ofs.close();
+		return TRUE;
+	} else
+		return FALSE;
 }
 
 #ifdef SHARED_HANDLERS

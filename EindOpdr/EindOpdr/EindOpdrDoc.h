@@ -25,6 +25,8 @@ public:
 public:
 	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
+	virtual BOOL CEindOpdrDoc::OnOpenDocument(LPCTSTR lpszPathName);
+	virtual BOOL CEindOpdrDoc::OnSaveDocument(LPCTSTR lpszPathName);
 #ifdef SHARED_HANDLERS
 	virtual void InitializeSearchContent();
 	virtual void OnDrawThumbnail(CDC& dc, LPRECT lprcBounds);
