@@ -57,10 +57,10 @@ BOOL CEindOpdrDoc::OnNewDocument()
 	return TRUE;
 }
 
-void CEindOpdrDoc::SetCurrentDrawShape(Shapes::Shape *s)
+void CEindOpdrDoc::SetCurrentDrawShape(std::unique_ptr<Shapes::Shape> s)
 {
 	/* Als je geen smart pointers gebruikt, dan moet je eerst de oude pointer weggooien. */
-	this->selectionDrawShape = s;
+	this->selectionDrawShape = std::move(s);
 }
 
 void CEindOpdrDoc::StartSelection(CPoint startpoint)
@@ -73,10 +73,8 @@ void CEindOpdrDoc::StopSelection(CPoint endpoint)
 	// TODO save drawing points into a shape variable.
 
 	/* sla de huidige op in de savedShapes lijst. */
-	savedShapes.push_back(selectionDrawShape);
-
-	/* Zet de huidige selectie pointer op null. */
-	this->selectionDrawShape = nullptr;
+	savedShapes.push_back(std::move(selectionDrawShape));
+	/* selectiondraw shape is nu null, omdat move is uitgevoerd. */
 
 	this->startPoint.x = -1;
 	this->endPoint.x = -1;
@@ -115,7 +113,7 @@ void CEindOpdrDoc::DrawSavedShapes(CDC *pDC)
 
 void CEindOpdrDoc::Serialize(CArchive& ar)
 {
-	
+	// niks!
 }
 
 BOOL CEindOpdrDoc::OnOpenDocument(LPCTSTR lpszPathName)

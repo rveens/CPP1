@@ -39,7 +39,7 @@ public:
 	void StartSelection(CPoint startpoint);
 	void StopSelection(CPoint endpoint);
 	void DrawSelection(CDC *pDC, CPoint currentMousePosition);
-	void SetCurrentDrawShape(Shapes::Shape *s);
+	void SetCurrentDrawShape(std::unique_ptr<Shapes::Shape> s);
 	void DrawSavedShapes(CDC *pDC);
 #ifdef _DEBUG
 	virtual void AssertValid() const;

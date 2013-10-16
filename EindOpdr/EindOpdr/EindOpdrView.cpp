@@ -169,7 +169,7 @@ void CEindOpdrView::OnShapeRectangle()
 	if (!pDoc)
 		return;
 
-	pDoc->SetCurrentDrawShape(new Shapes::Rectangle());
+	pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Rectangle()));
 }
 
 
@@ -181,5 +181,5 @@ void CEindOpdrView::OnShapeCircle()
 	if (!pDoc)
 		return;
 
-	pDoc->SetCurrentDrawShape(new Shapes::Circle());
+	pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Circle()));
 }
