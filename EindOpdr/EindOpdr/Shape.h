@@ -4,11 +4,12 @@
 #include <string>
 
 namespace Shapes {
-	class Shape : public CObject
+	class Shape
 	{
-		
 	public:
 		Shape();
+		//Shape(const Shapes::Shape &ander);
+		//Shape &operator=(const Shapes::Shape &ander);
 		virtual ~Shape(void);
 		virtual void Draw(CDC *pDC) = 0;
 		void SetPoints(CPoint start, CPoint end);

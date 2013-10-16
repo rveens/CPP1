@@ -8,6 +8,22 @@ Shapes::Shape::Shape()
 	pen.CreatePen(PS_DOT, 1, RGB(0,0,0));
 }
 
+/* 1. Copy constructor, als een object nog niet geinitialiseerd is, zoals bijv Shape s = r; s is nog niet geinitialiseerd, copy constructor wordt aangeroepen. */
+/*Shapes::Shape::Shape(const Shapes::Shape &ander) : pen(ander.pen), start(ander.start), end(ander.end)
+{
+}*/
+
+/* 2. Assignement operator */
+/*Shapes::Shape &Shapes::Shape::operator=(const Shapes::Shape &ander)
+{
+	this->pen = ander.pen;
+	this->start = ander.start;
+	this->end = ander.end;
+
+	return *this; // Geef een referentie terug, geen pointer.
+}*/
+
+/* 3. Destructor */
 Shapes::Shape::~Shape(void)
 {
 }

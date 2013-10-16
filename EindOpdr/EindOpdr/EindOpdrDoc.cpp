@@ -32,20 +32,18 @@ END_MESSAGE_MAP()
 CEindOpdrDoc::CEindOpdrDoc()
 {
 	// TODO: add one-time construction code here
-	history = new std::vector<Shapes::Shape *>();
-	savedShapes = new std::vector<Shapes::Shape *>();
+	history = std::vector<std::unique_ptr<Shapes::Shape>>();
+	savedShapes = std::vector<std::unique_ptr<Shapes::Shape>>();
 	startPoint.x = -1;
 	endPoint.x = -1;
 
 	// Set default selection shape
-	this->selectionDrawShape = new Shapes::Rectangle();
+	this->selectionDrawShape = std::unique_ptr<Shapes::Shape>(new Shapes::Rectangle());
 }
 
 CEindOpdrDoc::~CEindOpdrDoc()
 {
-	delete history;
-	delete savedShapes;
-	delete selectionDrawShape;
+	// Geen delete! smart pointers hahaha
 }
 
 BOOL CEindOpdrDoc::OnNewDocument()
@@ -61,8 +59,7 @@ BOOL CEindOpdrDoc::OnNewDocument()
 
 void CEindOpdrDoc::SetCurrentDrawShape(Shapes::Shape *s)
 {
-	if (this->selectionDrawShape)
-		delete this->selectionDrawShape;
+	/* Als je geen smart pointers gebruikt, dan moet je eerst de oude pointer weggooien. */
 	this->selectionDrawShape = s;
 }
 
@@ -76,13 +73,8 @@ void CEindOpdrDoc::StopSelection(CPoint endpoint)
 	// TODO save drawing points into a shape variable.
 
 	/* sla de huidige op in de savedShapes lijst. */
-	this->savedShapes->push_back(selectionDrawShape);
+	savedShapes.push_back(selectionDrawShape);
 
-	/*if (this->selectionDrawShape) {
-		std::string s = this->selectionDrawShape->toString();
-		TRACE(s.c_str());
-	}*/
-	
 	/* Zet de huidige selectie pointer op null. */
 	this->selectionDrawShape = nullptr;
 
@@ -109,11 +101,11 @@ void CEindOpdrDoc::DrawSelection(CDC *pDC, CPoint currentMousePosition)
 
 void CEindOpdrDoc::DrawSavedShapes(CDC *pDC)
 {
-	std::vector<Shapes::Shape*>::iterator it, end;
+	std::vector<std::unique_ptr<Shapes::Shape>>::iterator it, end;
 	
-	end = this->savedShapes->end();
+	end = this->savedShapes.end();
 
-	for (it = this->savedShapes->begin(); it != end; ++it)
+	for (it = this->savedShapes.begin(); it != end; ++it)
 		(*it)->Draw(pDC); // TODO tekenwaardes opslaan bij shape.
 }
 
@@ -152,7 +144,7 @@ BOOL CEindOpdrDoc::OnSaveDocument(LPCTSTR lpszPathName)
 
 	std::ofstream ofs (s_wstr, std::ofstream::out);
 	if (ofs) {
-		ofs << "lorem ipsum";
+		ofs << this->selectionDrawShape->toString();
 		ofs.close();
 		return TRUE;
 	} else

@@ -7,6 +7,7 @@
 #include <vector>
 #include "Shape.h"
 #include "Rectangle.h"
+#include <memory>
 
 
 class CEindOpdrDoc : public CDocument
@@ -46,9 +47,9 @@ public:
 #endif
 
 protected:
-	std::vector<Shapes::Shape*> *history;
-	std::vector<Shapes::Shape*> *savedShapes;
-	Shapes::Shape *selectionDrawShape;
+	std::vector<std::unique_ptr<Shapes::Shape>> history;
+	std::vector<std::unique_ptr<Shapes::Shape>> savedShapes;
+	std::unique_ptr<Shapes::Shape> selectionDrawShape;
 	CPoint startPoint;
 	CPoint endPoint;
 
