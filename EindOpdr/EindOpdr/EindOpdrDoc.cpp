@@ -24,7 +24,7 @@
 IMPLEMENT_DYNCREATE(CEindOpdrDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CEindOpdrDoc, CDocument)
-	ON_COMMAND(ID_SHAPE_SQUARE, &CEindOpdrDoc::OnShapeSquare)
+//	ON_COMMAND(ID_SHAPE_SQUARE, &CEindOpdrDoc::OnShapeSquare)
 END_MESSAGE_MAP()
 
 
@@ -217,8 +217,3 @@ void CEindOpdrDoc::Dump(CDumpContext& dc) const
 	CDocument::Dump(dc);
 }
 #endif //_DEBUG
-
-void CEindOpdrDoc::OnShapeSquare()
-{
-
-}
