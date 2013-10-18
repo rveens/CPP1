@@ -13,6 +13,8 @@
 #include "EindOpdrView.h"
 #include "Shape.h"
 #include "Circle.h"
+#include "Square.h"
+#include "Ellipse.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -33,6 +35,8 @@ BEGIN_MESSAGE_MAP(CEindOpdrView, CView)
 	ON_WM_MOUSEMOVE()
 	ON_COMMAND(ID_SHAPE_RECTANGLE, &CEindOpdrView::OnShapeRectangle)
 	ON_COMMAND(ID_SHAPE_CIRCLE, &CEindOpdrView::OnShapeCircle)
+	ON_COMMAND(ID_SHAPE_SQUARE, &CEindOpdrView::OnShapeSquare)
+	ON_COMMAND(ID_SHAPE_ELLIPSE, &CEindOpdrView::OnShapeEllipse)
 END_MESSAGE_MAP()
 
 // CEindOpdrView construction/destruction
@@ -182,4 +186,28 @@ void CEindOpdrView::OnShapeCircle()
 		return;
 
 	pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Circle()));
+}
+
+
+void CEindOpdrView::OnShapeSquare()
+{
+	// TODO: Add your command handler code here
+	CEindOpdrDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Square()));
+}
+
+
+void CEindOpdrView::OnShapeEllipse()
+{
+	// TODO: Add your command handler code here
+	CEindOpdrDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Ellipse()));
 }

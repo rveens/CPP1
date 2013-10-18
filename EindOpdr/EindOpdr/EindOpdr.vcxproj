@@ -105,10 +105,12 @@
     <ClInclude Include="EindOpdr.h" />
     <ClInclude Include="EindOpdrDoc.h" />
     <ClInclude Include="EindOpdrView.h" />
+    <ClInclude Include="Ellipse.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Shape.h" />
+    <ClInclude Include="Square.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -117,9 +119,11 @@
     <ClCompile Include="EindOpdr.cpp" />
     <ClCompile Include="EindOpdrDoc.cpp" />
     <ClCompile Include="EindOpdrView.cpp" />
+    <ClCompile Include="Ellipse.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Shape.cpp" />
+    <ClCompile Include="Square.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

@@ -46,6 +46,8 @@ public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnShapeRectangle();
 	afx_msg void OnShapeCircle();
+	afx_msg void OnShapeSquare();
+	afx_msg void OnShapeEllipse();
 };
 
 #ifndef _DEBUG  // debug version in EindOpdrView.cpp

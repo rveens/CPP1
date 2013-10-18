@@ -24,6 +24,7 @@
 IMPLEMENT_DYNCREATE(CEindOpdrDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CEindOpdrDoc, CDocument)
+	ON_COMMAND(ID_SHAPE_SQUARE, &CEindOpdrDoc::OnShapeSquare)
 END_MESSAGE_MAP()
 
 
@@ -59,7 +60,7 @@ BOOL CEindOpdrDoc::OnNewDocument()
 
 void CEindOpdrDoc::SetCurrentDrawShape(std::unique_ptr<Shapes::Shape> s)
 {
-	/* Als je geen smart pointers gebruikt, dan moet je eerst de oude pointer weggooien. */
+	/* Als je geen smart pointers gebruikt, dan moet je eerst de oude pointer weggooien. met delete. */
 	this->selectionDrawShape = std::move(s);
 }
 
@@ -217,5 +218,7 @@ void CEindOpdrDoc::Dump(CDumpContext& dc) const
 }
 #endif //_DEBUG
 
+void CEindOpdrDoc::OnShapeSquare()
+{
 
-// CEindOpdrDoc commands
+}

@@ -16,3 +16,10 @@ void Shapes::Circle::Draw(CDC *pDC)
 
 	pDC->Ellipse(start.x, start.y, end.x, end.y);
 }
+
+void Shapes::Circle::SetPoints(CPoint start, CPoint end)
+{
+	this->start = start;
+	this->end.y = (end.x - start.x) + start.y;
+	this->end.x = end.x;
+}

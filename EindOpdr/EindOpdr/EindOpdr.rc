@@ -102,6 +102,8 @@ BEGIN
     POPUP "Shape"
     BEGIN
         MENUITEM "Rectangle",                   ID_SHAPE_RECTANGLE
+        MENUITEM "Square",                      ID_SHAPE_SQUARE
+        MENUITEM "Ellipse",                     ID_SHAPE_ELLIPSE
         MENUITEM "Circle",                      ID_SHAPE_CIRCLE
     END
 END
