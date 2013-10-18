@@ -1,0 +1,57 @@
+We maken een tekenprogramma in C++ in Microsoft Visual Studio. Dit projectje levert je het eindcijfer voor dit vak op.
+
+Deze les krijg je een overzicht van alle eisen waar het programma aan moet voldoen.
+
+Je kunt er alleen aan werken, of met twee personen. Je wordt uitgenodigd om in week 9 of week 10 je werk te laten zien en beoordelen. Datum volgt nog. Volgende week wordt een lijstje met beoordelinscriteria gepubliceerd.
+
+Eisen aan het tekenprogramma van vorige week
+
+De volgende eisen waren al gesteld:
+
+In een menu Shape zijn minstens twee entries: Circle en Rectangle.
+Met klikken en slepen kun je de gekozen vorm tekenen.
+Maak een abstracte klasse Shape, die zichzelf kan tekenen. Circle en Rectangle zijn derived.
+Hou een lijst met getekende Shapes bij
+Shape kan zichzelf ook als tekst naar een stream schrijven en er van lezen
+Je kunt je tekening daarmee opslaan in een bestand en weer inlezen
+Nieuwe eisen aan het tekenprogramma
+
+Daar komt nog bij:
+
+Functionele eisen
+Je kunt kiezen uit de vormen: Vierkant, Rechthoek, Cirkel, Ellips en...
+Je kunt de vorm Veelhoek kiezen: klik een willekeurig aantal punten en er worden lijntjes tussen getrokken
+Er kunnen lijnen tussen vormen getrokken worden (diagrammen)
+Er kan tekst in een vorm gezet worden
+Lijndikte en -type kunnen per vorm of verbindingslijn worden ingesteld
+Er komt een vinkje in het menu vóór de huidige keuzes
+Tijdens het tekenen met de muis wordt de vorm in stippellijntjes getekend, pas in gewenste kleur bij loslaten
+Er is een undo-functie (ctrl-z)
+Je kunt objecten selecteren met een klik. Maak een methode virtual bool Shape::IsOn(CPoint point) const;
+Je kunt geselecteerde objecten verwijderen
+Als nodig wordt alles opnieuw getekend (bijvoorbeeld na minimize-maximize)
+Zorg voor logisch gedrag als de muisaanwijzer tijdens slepen het venster verlaat en dan al dan niet wordt losgelaten
+Voeg een toolbar toe
+
+Extra functies (voor extra punten)
+Lijnkleur en opvulkleur kunnnen per vorm of verbindingslijn worden ingesteld
+Je kunt geselecteerde objecten verplaatsen (verbindingslijnen gaan dan mee)
+Je kunt kleur en stijl van geselecteerde objecten wijzigen
+Je kunt de tekening afdrukken op een printer
+Je kunt vormen groeperen en loskoppelen
+Je kunt extra vormen, zoals pijlen, dynamisch toevoegen aan het menu. Staan in een apart bestand
+
+Technische eisen
+Sla je tekening op als een lijst van Shapes, bijvoorbeeld
+Shape **shapes; of Vector<Shape*> shapes;
+Gebruik string of char* voor tekst (utf-8)
+Sla tekstbestanden op als utf-8 met BOM
+Gebruik wstring of wchar_t* voor bestandsnamen
+Voorkom memory leaks: zet tegenover elke new een delete
+Voorkom overal 'index-out-of-bounds'
+Overige eisen
+Maak voor elke klasse een .cpp en een .h
+Schrijf duidelijk en zinvol commentaar in je sources
+Gebruik betekenisvolle naamen voor klasses, objecten, methoden en variabelen
+
+Succes
