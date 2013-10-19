@@ -63,6 +63,9 @@ void CEindOpdrDoc::SetCurrentDrawShape(std::unique_ptr<Shapes::Shape> s)
 {
 	/* Als je geen smart pointers gebruikt, dan moet je eerst de oude pointer weggooien. met delete. */
 	this->selectionDrawShape = std::move(s);
+	this->polygonpoints.clear();
+	this->startPoint.x = -1;
+	this->endPoint.x = -1;
 }
 
 void CEindOpdrDoc::StartSelection(CPoint startpoint)
@@ -115,6 +118,22 @@ void CEindOpdrDoc::DrawSavedShapes(CDC *pDC)
 
 	for (it = this->savedShapes.begin(); it != end; ++it)
 		(*it)->Draw(pDC); // TODO tekenwaardes opslaan bij shape.
+}
+
+void CEindOpdrDoc::AddPolygonPoint(CPoint point)
+{
+	this->polygonpoints.push_back(point);
+}
+
+void CEindOpdrDoc::DrawPolygon(CDC *pDC)
+{
+	this->selectionDrawShape->SetPoints(this->polygonpoints);
+	this->selectionDrawShape->Draw(pDC);
+}
+
+void CEindOpdrDoc::FinishPolygon()
+{
+	savedShapes.push_back(std::move(selectionDrawShape));
 }
 
 // CEindOpdrDoc serialization

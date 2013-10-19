@@ -15,6 +15,7 @@
 #include "Circle.h"
 #include "Square.h"
 #include "Ellipse.h"
+#include "Polygon.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -127,7 +128,13 @@ void CEindOpdrView::OnLButtonDown(UINT nFlags, CPoint point)
 	if (!pDoc)
 		return;
 
-	pDoc->StartSelection(point);
+	if (this->poligonmode) {
+		pDoc->AddPolygonPoint(point);
+		CDC *pDC = GetDC();
+		pDoc->DrawPolygon(pDC);
+		ReleaseDC(pDC);
+	} else
+		pDoc->StartSelection(point);
 
 	CView::OnLButtonDown(nFlags, point);
 }
@@ -141,7 +148,10 @@ void CEindOpdrView::OnLButtonUp(UINT nFlags, CPoint point)
 	if (!pDoc)
 		return;
 
-	pDoc->StopSelection(point);
+	if (this->poligonmode)
+		; // niets
+	else
+		pDoc->StopSelection(point);
 
 	CView::OnLButtonUp(nFlags, point);
 }
@@ -157,8 +167,13 @@ void CEindOpdrView::OnMouseMove(UINT nFlags, CPoint point)
 
 	CDC *pDC = GetDC();
 
-	if (GetKeyState(VK_LBUTTON) & 0x80)
-		pDoc->DrawSelection(pDC, point);
+	if (GetKeyState(VK_LBUTTON) & 0x80) {
+		if (this->poligonmode)
+			; // niets
+		else
+			pDoc->DrawSelection(pDC, point);
+	}
+		
 
 	ReleaseDC(pDC);
 
@@ -230,11 +245,11 @@ void CEindOpdrView::OnShapePolygon()
 
 	if (pMenu->GetMenuState(ID_SHAPE_POLYGON, MF_CHECKED) == MF_CHECKED) {
 		pMenu->CheckMenuItem(ID_SHAPE_POLYGON, MF_UNCHECKED | MF_BYCOMMAND); // uit
+		pDoc->FinishPolygon();
 		poligonmode = FALSE;
 	} else {
 		pMenu->CheckMenuItem(ID_SHAPE_POLYGON, MF_CHECKED | MF_BYCOMMAND); // aan
 		poligonmode = TRUE;
-		// gooi huidige selectie weg.
-		pDoc->SetCurrentDrawShape(nullptr);
+		pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Polygon));
 	}
 }

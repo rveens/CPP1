@@ -41,6 +41,9 @@ public:
 	void DrawSelection(CDC *pDC, CPoint currentMousePosition);
 	void SetCurrentDrawShape(std::unique_ptr<Shapes::Shape> s);
 	void DrawSavedShapes(CDC *pDC);
+	void AddPolygonPoint(CPoint point);
+	void DrawPolygon(CDC *pDC);
+	void FinishPolygon();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
@@ -52,6 +55,7 @@ protected:
 	std::unique_ptr<Shapes::Shape> selectionDrawShape;
 	CPoint startPoint;
 	CPoint endPoint;
+	std::vector<CPoint> polygonpoints;
 
 // Generated message map functions
 protected:
