@@ -2,6 +2,10 @@
 
 #include "stdafx.h"
 #include <string>
+#include <vector>
+#include <stdexcept> // std::invalid_argument
+
+using std::vector;
 
 namespace Shapes {
 	class Shape
@@ -12,11 +16,10 @@ namespace Shapes {
 		Shape &operator=(const Shapes::Shape &ander);
 		virtual ~Shape(void);
 		virtual void Draw(CDC *pDC) = 0;
-		virtual void SetPoints(CPoint start, CPoint end);
-		std::string Shapes::Shape::toString() const;
+		virtual void SetPoints(vector<CPoint> points);
+		virtual std::string Shapes::Shape::toString() const;
 	protected:
 		CPen pen;
-		CPoint start;
-		CPoint end;
+		vector<CPoint> points; // usually 0 for start and 1 for end.
 	};
 }

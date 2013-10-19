@@ -9,6 +9,6 @@ namespace Shapes {
 		Square(void);
 		~Square(void);
 		void Draw(CDC *pDC);
-		void SetPoints(CPoint start, CPoint end);
+		void SetPoints(vector<CPoint> points);
 	};
 }

@@ -83,16 +83,24 @@ void CEindOpdrDoc::StopSelection(CPoint endpoint)
 
 void CEindOpdrDoc::DrawSelection(CDC *pDC, CPoint currentMousePosition)
 {
+	vector<CPoint> t;
+
 	if (startPoint.x != -1 && this->selectionDrawShape)
 	{
 		// Trek vorige vorm over. 2 x XOR geeft oorspronkelijke waarde
 		if (endPoint.x != -1) {
-			this->selectionDrawShape->SetPoints(startPoint, endPoint);
+			// vector<CPoint> v = { startPoint, endPoint }; ooh ja, stomme microsoft compiler ondersteund dit niet.
+			t.push_back(startPoint);
+			t.push_back(endPoint);
+			this->selectionDrawShape->SetPoints(t);
 			this->selectionDrawShape->Draw(pDC);
 		}
 
 		// Teken huidige vorm met XOR
-		this->selectionDrawShape->SetPoints(startPoint, currentMousePosition);
+		t.clear();
+		t.push_back(startPoint);
+		t.push_back(currentMousePosition);
+		this->selectionDrawShape->SetPoints(t);
 		this->selectionDrawShape->Draw(pDC);
 		endPoint = currentMousePosition;
 	}
