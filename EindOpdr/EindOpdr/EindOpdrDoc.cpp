@@ -10,6 +10,7 @@
 #endif
 
 #include "EindOpdrDoc.h"
+#include "Polygon.h"
 #include <fstream>
 #include <string>
 
@@ -115,8 +116,6 @@ void CEindOpdrDoc::DrawSavedShapes(CDC *pDC)
 	for (it = this->savedShapes.begin(); it != end; ++it)
 		(*it)->Draw(pDC); // TODO tekenwaardes opslaan bij shape.
 }
-
-
 
 // CEindOpdrDoc serialization
 

@@ -222,12 +222,19 @@ void CEindOpdrView::OnShapePolygon()
 {
 	// TODO: Add your command handler code here
 	CMenu *pMenu = AfxGetMainWnd()->GetMenu();
-	
+	CEindOpdrDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+
 	if (pMenu->GetMenuState(ID_SHAPE_POLYGON, MF_CHECKED) == MF_CHECKED) {
 		pMenu->CheckMenuItem(ID_SHAPE_POLYGON, MF_UNCHECKED | MF_BYCOMMAND); // uit
 		poligonmode = FALSE;
 	} else {
 		pMenu->CheckMenuItem(ID_SHAPE_POLYGON, MF_CHECKED | MF_BYCOMMAND); // aan
 		poligonmode = TRUE;
+		// gooi huidige selectie weg.
+		pDoc->SetCurrentDrawShape(nullptr);
 	}
 }

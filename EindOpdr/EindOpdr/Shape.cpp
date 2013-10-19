@@ -41,7 +41,7 @@ void Shapes::Shape::Draw(CDC *pDC)
 void Shapes::Shape::SetPoints(vector<CPoint> points)
 {
 	if (points.size() < 2)
-		throw std::invalid_argument("Expected at least two points");
+		throw std::invalid_argument("shape expected at least two points");
 	else
 		this->points = points;
 }
