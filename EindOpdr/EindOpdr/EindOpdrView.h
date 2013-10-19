@@ -14,6 +14,8 @@ protected: // create from serialization only
 // Attributes
 public:
 	CEindOpdrDoc* GetDocument() const;
+private:
+	BOOL poligonmode;
 
 // Operations
 public:
@@ -48,6 +50,7 @@ public:
 	afx_msg void OnShapeCircle();
 	afx_msg void OnShapeSquare();
 	afx_msg void OnShapeEllipse();
+	afx_msg void OnShapePolygon();
 };
 
 #ifndef _DEBUG  // debug version in EindOpdrView.cpp

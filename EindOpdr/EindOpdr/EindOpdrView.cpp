@@ -37,6 +37,7 @@ BEGIN_MESSAGE_MAP(CEindOpdrView, CView)
 	ON_COMMAND(ID_SHAPE_CIRCLE, &CEindOpdrView::OnShapeCircle)
 	ON_COMMAND(ID_SHAPE_SQUARE, &CEindOpdrView::OnShapeSquare)
 	ON_COMMAND(ID_SHAPE_ELLIPSE, &CEindOpdrView::OnShapeEllipse)
+	ON_COMMAND(ID_SHAPE_POLYGON, &CEindOpdrView::OnShapePolygon)
 END_MESSAGE_MAP()
 
 // CEindOpdrView construction/destruction
@@ -44,7 +45,7 @@ END_MESSAGE_MAP()
 CEindOpdrView::CEindOpdrView()
 {
 	// TODO: add construction code here
-
+	poligonmode = FALSE;
 }
 
 CEindOpdrView::~CEindOpdrView()
@@ -173,7 +174,8 @@ void CEindOpdrView::OnShapeRectangle()
 	if (!pDoc)
 		return;
 
-	pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Rectangle()));
+	if (!poligonmode) // mag alleen als polygonmode uitstaat
+		pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Rectangle()));
 }
 
 
@@ -185,7 +187,8 @@ void CEindOpdrView::OnShapeCircle()
 	if (!pDoc)
 		return;
 
-	pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Circle()));
+	if (!poligonmode) // mag alleen als polygonmode uitstaat
+		pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Circle()));
 }
 
 
@@ -197,7 +200,8 @@ void CEindOpdrView::OnShapeSquare()
 	if (!pDoc)
 		return;
 
-	pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Square()));
+	if (!poligonmode) // mag alleen als polygonmode uitstaat
+		pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Square()));
 }
 
 
@@ -209,5 +213,21 @@ void CEindOpdrView::OnShapeEllipse()
 	if (!pDoc)
 		return;
 
-	pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Ellipse()));
+	if (!poligonmode) // mag alleen als polygonmode uitstaat
+		pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Ellipse()));
+}
+
+
+void CEindOpdrView::OnShapePolygon()
+{
+	// TODO: Add your command handler code here
+	CMenu *pMenu = AfxGetMainWnd()->GetMenu();
+	
+	if (pMenu->GetMenuState(ID_SHAPE_POLYGON, MF_CHECKED) == MF_CHECKED) {
+		pMenu->CheckMenuItem(ID_SHAPE_POLYGON, MF_UNCHECKED | MF_BYCOMMAND); // uit
+		poligonmode = FALSE;
+	} else {
+		pMenu->CheckMenuItem(ID_SHAPE_POLYGON, MF_CHECKED | MF_BYCOMMAND); // aan
+		poligonmode = TRUE;
+	}
 }
