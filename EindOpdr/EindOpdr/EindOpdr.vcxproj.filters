@@ -17,6 +17,7 @@
   <ItemGroup>
     <Text Include="ReadMe.txt" />
     <Text Include="OPDRACHT.txt" />
+    <Text Include="VRAAGJES.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EindOpdr.h">

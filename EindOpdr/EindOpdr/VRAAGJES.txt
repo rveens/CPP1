@@ -1,0 +1,5 @@
+- MFC is heel erg oud?
+	- Welk framework gebruik ik als ik een baan met C++ vind?
+	- Wordt managed C++ nog gebruikt? (dit is toch een heel andere taal?)
+
+- CObject copy en assignment constructors zijn private?
