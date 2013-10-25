@@ -50,8 +50,7 @@ public:
 #endif
 
 protected:
-	std::vector<std::unique_ptr<Shapes::Shape>> history;
-	std::vector<std::unique_ptr<Shapes::Shape>> savedShapes;
+	std::vector<std::shared_ptr<Shapes::Shape>> savedShapes;
 	std::unique_ptr<Shapes::Shape> selectionDrawShape;
 	CPoint startPoint;
 	CPoint endPoint;

@@ -34,8 +34,7 @@ END_MESSAGE_MAP()
 CEindOpdrDoc::CEindOpdrDoc()
 {
 	// TODO: add one-time construction code here
-	history = std::vector<std::unique_ptr<Shapes::Shape>>();
-	savedShapes = std::vector<std::unique_ptr<Shapes::Shape>>();
+	savedShapes = std::vector<std::shared_ptr<Shapes::Shape>>();
 	startPoint.x = -1;
 	endPoint.x = -1;
 
@@ -112,7 +111,7 @@ void CEindOpdrDoc::DrawSelection(CDC *pDC, CPoint currentMousePosition)
 
 void CEindOpdrDoc::DrawSavedShapes(CDC *pDC)
 {
-	std::vector<std::unique_ptr<Shapes::Shape>>::iterator it, end;
+	std::vector<std::shared_ptr<Shapes::Shape>>::iterator it, end;
 	
 	end = this->savedShapes.end();
 
@@ -120,6 +119,9 @@ void CEindOpdrDoc::DrawSavedShapes(CDC *pDC)
 		(*it)->Draw(pDC); // TODO tekenwaardes opslaan bij shape.
 }
 
+
+
+// polygon teken functies
 void CEindOpdrDoc::AddPolygonPoint(CPoint point)
 {
 	this->polygonpoints.push_back(point);

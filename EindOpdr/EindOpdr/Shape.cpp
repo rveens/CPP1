@@ -56,3 +56,8 @@ std::string Shapes::Shape::toString() const
 	
 	return ss.str();
 }
+
+bool Shapes::Shape::IsOn(CPoint point) const
+{
+	return true;
+}

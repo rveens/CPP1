@@ -4,8 +4,10 @@
 #include <string>
 #include <vector>
 #include <stdexcept> // std::invalid_argument
+#include <memory>
 
 using std::vector;
+using std::shared_ptr;
 
 namespace Shapes {
 	class Shape
@@ -18,8 +20,10 @@ namespace Shapes {
 		virtual void Draw(CDC *pDC) = 0;
 		virtual void SetPoints(vector<CPoint> points);
 		virtual std::string Shapes::Shape::toString() const;
+		virtual bool Shape::IsOn(CPoint point) const;
 	protected:
 		CPen pen;
 		vector<CPoint> points; // usually 0 for start and 1 for end.
+		shared_ptr<Shape> child; // kind shape in de boom van gelinkte nodes.
 	};
 }

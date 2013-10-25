@@ -71,7 +71,10 @@ void CEindOpdrView::OnDraw(CDC* pDC)
 		return;
 
 	// TODO: add draw code for native data here
-	pDoc->DrawSavedShapes(pDC);
+	if (poligonmode)
+		pDoc->DrawPolygon(pDC);
+	else
+		pDoc->DrawSavedShapes(pDC);
 
 	ReleaseDC(pDC);
 }
@@ -136,6 +139,7 @@ void CEindOpdrView::OnLButtonDown(UINT nFlags, CPoint point)
 	} else
 		pDoc->StartSelection(point);
 
+	this->Invalidate();
 	CView::OnLButtonDown(nFlags, point);
 }
 
@@ -153,6 +157,7 @@ void CEindOpdrView::OnLButtonUp(UINT nFlags, CPoint point)
 	else
 		pDoc->StopSelection(point);
 
+	this->Invalidate();
 	CView::OnLButtonUp(nFlags, point);
 }
 
@@ -173,7 +178,6 @@ void CEindOpdrView::OnMouseMove(UINT nFlags, CPoint point)
 		else
 			pDoc->DrawSelection(pDC, point);
 	}
-		
 
 	ReleaseDC(pDC);
 
@@ -246,7 +250,9 @@ void CEindOpdrView::OnShapePolygon()
 	if (pMenu->GetMenuState(ID_SHAPE_POLYGON, MF_CHECKED) == MF_CHECKED) {
 		pMenu->CheckMenuItem(ID_SHAPE_POLYGON, MF_UNCHECKED | MF_BYCOMMAND); // uit
 		pDoc->FinishPolygon();
+		this->Invalidate();
 		poligonmode = FALSE;
+
 	} else {
 		pMenu->CheckMenuItem(ID_SHAPE_POLYGON, MF_CHECKED | MF_BYCOMMAND); // aan
 		poligonmode = TRUE;
