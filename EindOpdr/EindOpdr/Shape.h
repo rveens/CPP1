@@ -7,7 +7,7 @@
 #include <memory>
 
 using std::vector;
-using std::shared_ptr;
+using std::weak_ptr;
 
 namespace Shapes {
 	class Shape
@@ -19,11 +19,12 @@ namespace Shapes {
 		virtual ~Shape(void);
 		virtual void Draw(CDC *pDC) = 0;
 		virtual void SetPoints(vector<CPoint> points);
-		virtual std::string Shapes::Shape::toString() const;
-		virtual bool Shape::IsOn(CPoint point) const;
+		virtual std::string toString() const;
+		virtual bool IsOn(CPoint point) const;
+		virtual void SetPen(int nPenStyle, int nWidth, COLORREF crColor);
 	protected:
 		CPen pen;
 		vector<CPoint> points; // usually 0 for start and 1 for end.
-		shared_ptr<Shape> child; // kind shape in de boom van gelinkte nodes.
+		weak_ptr<Shape> child; // kind shape in de boom van gelinkte nodes.
 	};
 }

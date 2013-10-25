@@ -73,8 +73,7 @@ void CEindOpdrView::OnDraw(CDC* pDC)
 	// TODO: add draw code for native data here
 	if (poligonmode)
 		pDoc->DrawPolygon(pDC);
-	else
-		pDoc->DrawSavedShapes(pDC);
+	pDoc->DrawSavedShapes(pDC);
 
 	ReleaseDC(pDC);
 }

@@ -74,7 +74,8 @@ void CEindOpdrDoc::StartSelection(CPoint startpoint)
 
 void CEindOpdrDoc::StopSelection(CPoint endpoint)
 {
-	// TODO save drawing points into a shape variable.
+	/* verander de pen naar de uiteindelijke kleur */
+	selectionDrawShape->SetPen(PS_COSMETIC, 1, RGB(0,0,0));
 
 	/* sla de huidige op in de savedShapes lijst. */
 	savedShapes.push_back(std::move(selectionDrawShape));
@@ -157,9 +158,7 @@ BOOL CEindOpdrDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		ifs.close();
 		return TRUE;
 	} else
-		return FALSE;;
-
-	return 0;
+		return FALSE;
 }
 
 BOOL CEindOpdrDoc::OnSaveDocument(LPCTSTR lpszPathName)

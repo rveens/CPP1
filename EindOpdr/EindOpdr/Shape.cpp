@@ -5,7 +5,7 @@
 
 Shapes::Shape::Shape()
 {
-	pen.CreatePen(PS_DOT, 1, RGB(0,0,0));
+	pen.CreatePen(PS_DOT, 1, RGB(0,0,255));
 }
 
 // regel van drie (rule of three)
@@ -55,6 +55,12 @@ std::string Shapes::Shape::toString() const
 	//ss << "pen: " << this->pen;
 	
 	return ss.str();
+}
+
+void Shapes::Shape::SetPen(int nPenStyle, int nWidth, COLORREF crColor)
+{
+	this->pen.DeleteObject();
+	this->pen.CreatePen(nPenStyle, nWidth, crColor);
 }
 
 bool Shapes::Shape::IsOn(CPoint point) const
