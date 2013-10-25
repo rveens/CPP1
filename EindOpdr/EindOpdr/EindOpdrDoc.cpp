@@ -74,12 +74,15 @@ void CEindOpdrDoc::StartSelection(CPoint startpoint)
 
 void CEindOpdrDoc::StopSelection(CPoint endpoint)
 {
-	/* verander de pen naar de uiteindelijke kleur */
-	selectionDrawShape->SetPen(PS_COSMETIC, 1, RGB(0,0,0));
+	// Check of we nu een selectionshape hebben, 
+	if (selectionDrawShape) {
+		/* verander de pen naar de uiteindelijke kleur */
+		selectionDrawShape->SetPen(PS_COSMETIC, 1, RGB(0,0,0));
 
-	/* sla de huidige op in de savedShapes lijst. */
-	savedShapes.push_back(std::move(selectionDrawShape));
-	/* selectiondraw shape is nu null, omdat move is uitgevoerd. */
+		/* sla de huidige op in de savedShapes lijst. */
+		savedShapes.push_back(std::move(selectionDrawShape));
+		/* selectiondraw shape is nu null, omdat move is uitgevoerd. */
+	}
 
 	this->startPoint.x = -1;
 	this->endPoint.x = -1;

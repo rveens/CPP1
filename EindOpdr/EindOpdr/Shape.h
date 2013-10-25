@@ -8,6 +8,7 @@
 
 using std::vector;
 using std::weak_ptr;
+using std::wstring;
 
 namespace Shapes {
 	class Shape
@@ -22,8 +23,10 @@ namespace Shapes {
 		virtual std::string toString() const;
 		virtual bool IsOn(CPoint point) const;
 		virtual void SetPen(int nPenStyle, int nWidth, COLORREF crColor);
+		virtual void SetText(wstring newstring);
 	protected:
 		CPen pen;
+		wstring text;
 		vector<CPoint> points; // usually 0 for start and 1 for end.
 		weak_ptr<Shape> child; // kind shape in de boom van gelinkte nodes.
 	};

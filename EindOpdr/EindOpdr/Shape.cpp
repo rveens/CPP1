@@ -3,7 +3,7 @@
 #include <sstream>
 
 
-Shapes::Shape::Shape()
+Shapes::Shape::Shape() : text(L"test")
 {
 	pen.CreatePen(PS_DOT, 1, RGB(0,0,255));
 }
@@ -66,4 +66,9 @@ void Shapes::Shape::SetPen(int nPenStyle, int nWidth, COLORREF crColor)
 bool Shapes::Shape::IsOn(CPoint point) const
 {
 	return true;
+}
+
+void Shapes::Shape::SetText(wstring newstring)
+{
+	this->text = newstring;
 }
