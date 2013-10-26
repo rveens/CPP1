@@ -12,6 +12,7 @@ Shapes::Polygon::~Polygon(void)
 
 void Shapes::Polygon::Draw(CDC *pDC)
 {
+	Shapes::Shape::Draw(pDC);
 	if (!points.empty())
 		pDC->Polygon(&points[0], points.size());
 }

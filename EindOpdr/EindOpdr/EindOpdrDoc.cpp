@@ -142,7 +142,12 @@ void CEindOpdrDoc::DrawPolygon(CDC *pDC)
 
 void CEindOpdrDoc::FinishPolygon()
 {
-	savedShapes.push_back(std::move(selectionDrawShape));
+	if (selectionDrawShape) {
+		/* verander de pen naar de uiteindelijke kleur */
+		selectionDrawShape->SetPen(PS_COSMETIC, 1, RGB(0,0,0));
+
+		savedShapes.push_back(std::move(selectionDrawShape));
+	}
 }
 
 void CEindOpdrDoc::TrySelection(CPoint p)

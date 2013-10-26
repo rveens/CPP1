@@ -25,8 +25,8 @@ x Je kunt de vorm Veelhoek kiezen: klik een willekeurig aantal punten en er word
 - Er kunnen lijnen tussen vormen getrokken worden (diagrammen)
 - Er kan tekst in een vorm gezet worden
 - Lijndikte en -type kunnen per vorm of verbindingslijn worden ingesteld
-- Er komt een vinkje in het menu vóór de huidige keuzes
-- Tijdens het tekenen met de muis wordt de vorm in stippellijntjes getekend, pas in gewenste kleur bij loslaten
+x Er komt een vinkje in het menu vóór de huidige keuzes
+x Tijdens het tekenen met de muis wordt de vorm in stippellijntjes getekend, pas in gewenste kleur bij loslaten
 - Er is een undo-functie (ctrl-z)
 - Je kunt objecten selecteren met een klik. Maak een methode virtual bool Shape::IsOn(CPoint point) const;
 - Je kunt geselecteerde objecten verwijderen
