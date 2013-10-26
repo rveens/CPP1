@@ -40,9 +40,6 @@ CEindOpdrDoc::CEindOpdrDoc()
 	savedShapes = std::vector<std::shared_ptr<Shapes::Shape>>();
 	startPoint.x = -1;
 	endPoint.x = -1;
-
-	// Set default selection shape
-	this->selectionDrawShape = std::unique_ptr<Shapes::Shape>(new Shapes::Rectangle());
 }
 
 CEindOpdrDoc::~CEindOpdrDoc()
@@ -118,12 +115,9 @@ void CEindOpdrDoc::DrawSelection(CDC *pDC, CPoint currentMousePosition)
 
 void CEindOpdrDoc::DrawSavedShapes(CDC *pDC)
 {
-	std::vector<std::shared_ptr<Shapes::Shape>>::iterator it, end;
-	
-	end = this->savedShapes.end();
-
-	for (it = this->savedShapes.begin(); it != end; ++it)
-		(*it)->Draw(pDC); // TODO tekenwaardes opslaan bij shape.
+	std::for_each(std::begin(savedShapes), std::end(savedShapes), [&](std::shared_ptr<Shapes::Shape> s) {
+		s->Draw(pDC);
+	});
 }
 
 

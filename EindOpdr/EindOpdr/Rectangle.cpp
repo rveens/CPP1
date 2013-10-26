@@ -12,6 +12,9 @@ Shapes::Rectangle::~Rectangle(void)
 void Shapes::Rectangle::Draw(CDC *pDC)
 {
 	Shapes::Shape::Draw(pDC);
+	if (points.empty())
+		return;
+
 	pDC->Rectangle(points[0].x, points[0].y, points[1].x, points[1].y);
 
 	CRect textRect(points[0].x, points[0].y, points[1].x, points[1].y);

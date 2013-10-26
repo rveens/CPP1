@@ -50,6 +50,7 @@ Sla tekstbestanden op als utf-8 met BOM
 Gebruik wstring of wchar_t* voor bestandsnamen
 Voorkom memory leaks: zet tegenover elke new een delete
 Voorkom overal 'index-out-of-bounds'
+
 Overige eisen
 Maak voor elke klasse een .cpp en een .h
 Schrijf duidelijk en zinvol commentaar in je sources
