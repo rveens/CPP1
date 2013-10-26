@@ -146,6 +146,7 @@ void CEindOpdrView::OnLButtonDown(UINT nFlags, CPoint point)
 void CEindOpdrView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: Add your message handler code here and/or call default
+	CMenu *pMenu = AfxGetMainWnd()->GetMenu();
 	CEindOpdrDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
@@ -157,6 +158,15 @@ void CEindOpdrView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->StopSelection(point);
 
 	this->Invalidate();
+
+	/* zet alle vinkjes uit */
+	pMenu->CheckMenuItem(ID_SHAPE_SQUARE, MF_UNCHECKED | MF_BYCOMMAND);
+	pMenu->CheckMenuItem(ID_SHAPE_CIRCLE, MF_UNCHECKED | MF_BYCOMMAND);
+	pMenu->CheckMenuItem(ID_SHAPE_SQUARE, MF_UNCHECKED | MF_BYCOMMAND);
+	pMenu->CheckMenuItem(ID_SHAPE_ELLIPSE, MF_UNCHECKED | MF_BYCOMMAND);
+	pMenu->CheckMenuItem(ID_SHAPE_CIRCLE, MF_UNCHECKED | MF_BYCOMMAND);
+	pMenu->CheckMenuItem(ID_SHAPE_RECTANGLE, MF_UNCHECKED | MF_BYCOMMAND);
+
 	CView::OnLButtonUp(nFlags, point);
 }
 
@@ -187,52 +197,88 @@ void CEindOpdrView::OnMouseMove(UINT nFlags, CPoint point)
 void CEindOpdrView::OnShapeRectangle()
 {
 	// TODO: Add your command handler code here
+	CMenu *pMenu = AfxGetMainWnd()->GetMenu();
 	CEindOpdrDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
 
-	if (!poligonmode) // mag alleen als polygonmode uitstaat
+	if (!poligonmode) { // mag alleen als polygonmode uitstaat
 		pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Rectangle()));
+
+		pMenu->CheckMenuItem(ID_SHAPE_SQUARE, MF_UNCHECKED | MF_BYCOMMAND);
+		pMenu->CheckMenuItem(ID_SHAPE_CIRCLE, MF_UNCHECKED | MF_BYCOMMAND);
+		pMenu->CheckMenuItem(ID_SHAPE_SQUARE, MF_UNCHECKED | MF_BYCOMMAND);
+		pMenu->CheckMenuItem(ID_SHAPE_ELLIPSE, MF_UNCHECKED | MF_BYCOMMAND);
+		pMenu->CheckMenuItem(ID_SHAPE_CIRCLE, MF_UNCHECKED | MF_BYCOMMAND);
+
+		pMenu->CheckMenuItem(ID_SHAPE_RECTANGLE, MF_CHECKED | MF_BYCOMMAND);
+	}
 }
 
 
 void CEindOpdrView::OnShapeCircle()
 {
 	// TODO: Add your command handler code here
+	CMenu *pMenu = AfxGetMainWnd()->GetMenu();
 	CEindOpdrDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
 
-	if (!poligonmode) // mag alleen als polygonmode uitstaat
+	if (!poligonmode) { // mag alleen als polygonmode uitstaat
 		pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Circle()));
+
+		pMenu->CheckMenuItem(ID_SHAPE_SQUARE, MF_UNCHECKED | MF_BYCOMMAND);
+		pMenu->CheckMenuItem(ID_SHAPE_CIRCLE, MF_UNCHECKED | MF_BYCOMMAND);
+		pMenu->CheckMenuItem(ID_SHAPE_SQUARE, MF_UNCHECKED | MF_BYCOMMAND);
+		pMenu->CheckMenuItem(ID_SHAPE_RECTANGLE, MF_UNCHECKED | MF_BYCOMMAND);
+		pMenu->CheckMenuItem(ID_SHAPE_ELLIPSE, MF_UNCHECKED | MF_BYCOMMAND);
+
+		pMenu->CheckMenuItem(ID_SHAPE_CIRCLE, MF_CHECKED | MF_BYCOMMAND);
+	}
 }
 
 
 void CEindOpdrView::OnShapeSquare()
 {
 	// TODO: Add your command handler code here
+	CMenu *pMenu = AfxGetMainWnd()->GetMenu();
 	CEindOpdrDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
 
-	if (!poligonmode) // mag alleen als polygonmode uitstaat
+	if (!poligonmode) { // mag alleen als polygonmode uitstaat
 		pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Square()));
+		pMenu->CheckMenuItem(ID_SHAPE_CIRCLE, MF_UNCHECKED | MF_BYCOMMAND);
+		pMenu->CheckMenuItem(ID_SHAPE_SQUARE, MF_UNCHECKED | MF_BYCOMMAND);
+		pMenu->CheckMenuItem(ID_SHAPE_RECTANGLE, MF_UNCHECKED | MF_BYCOMMAND);
+		pMenu->CheckMenuItem(ID_SHAPE_ELLIPSE, MF_UNCHECKED | MF_BYCOMMAND);
+
+		pMenu->CheckMenuItem(ID_SHAPE_SQUARE, MF_CHECKED | MF_BYCOMMAND);
+	}
 }
 
 
 void CEindOpdrView::OnShapeEllipse()
 {
 	// TODO: Add your command handler code here
+	CMenu *pMenu = AfxGetMainWnd()->GetMenu();
 	CEindOpdrDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
 
-	if (!poligonmode) // mag alleen als polygonmode uitstaat
+	if (!poligonmode) { // mag alleen als polygonmode uitstaat
 		pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Ellipse()));
+		pMenu->CheckMenuItem(ID_SHAPE_CIRCLE, MF_UNCHECKED | MF_BYCOMMAND);
+		pMenu->CheckMenuItem(ID_SHAPE_SQUARE, MF_UNCHECKED | MF_BYCOMMAND);
+		pMenu->CheckMenuItem(ID_SHAPE_RECTANGLE, MF_UNCHECKED | MF_BYCOMMAND);
+		pMenu->CheckMenuItem(ID_SHAPE_SQUARE, MF_UNCHECKED | MF_BYCOMMAND);
+
+		pMenu->CheckMenuItem(ID_SHAPE_ELLIPSE, MF_CHECKED | MF_BYCOMMAND);
+	}
 }
 
 
@@ -245,6 +291,12 @@ void CEindOpdrView::OnShapePolygon()
 	if (!pDoc)
 		return;
 
+	pMenu->CheckMenuItem(ID_SHAPE_SQUARE, MF_UNCHECKED | MF_BYCOMMAND);
+	pMenu->CheckMenuItem(ID_SHAPE_CIRCLE, MF_UNCHECKED | MF_BYCOMMAND);
+	pMenu->CheckMenuItem(ID_SHAPE_SQUARE, MF_UNCHECKED | MF_BYCOMMAND);
+	pMenu->CheckMenuItem(ID_SHAPE_ELLIPSE, MF_UNCHECKED | MF_BYCOMMAND);
+	pMenu->CheckMenuItem(ID_SHAPE_CIRCLE, MF_UNCHECKED | MF_BYCOMMAND);
+	pMenu->CheckMenuItem(ID_SHAPE_RECTANGLE, MF_UNCHECKED | MF_BYCOMMAND);
 
 	if (pMenu->GetMenuState(ID_SHAPE_POLYGON, MF_CHECKED) == MF_CHECKED) {
 		pMenu->CheckMenuItem(ID_SHAPE_POLYGON, MF_UNCHECKED | MF_BYCOMMAND); // uit
