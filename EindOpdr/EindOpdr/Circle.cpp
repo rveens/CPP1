@@ -17,7 +17,7 @@ void Shapes::Circle::Draw(CDC *pDC)
 	pDC->Ellipse(points[0].x, points[0].y, points[1].x, points[1].y);
 
 	CRect textRect(points[0].x, points[0].y, points[1].x, points[1].y);
-	pDC->DrawText(this->text.c_str(), textRect, 0);
+	pDC->DrawText(this->text.c_str(), textRect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 }
 
 void Shapes::Circle::SetPoints(vector<CPoint> points)
