@@ -65,7 +65,14 @@ void Shapes::Shape::SetPen(int nPenStyle, int nWidth, COLORREF crColor)
 
 bool Shapes::Shape::IsOn(CPoint point) const
 {
-	return true;
+	bool returnValue = false;
+
+	if (points.size() == 2)
+		if (point.x > points[0].x && point.x < points[1].x &&
+			point.y > points[0].y && point.y < points[1].y)
+			returnValue = true;
+
+	return returnValue;
 }
 
 void Shapes::Shape::SetText(wstring newstring)
