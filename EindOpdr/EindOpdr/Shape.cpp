@@ -3,9 +3,10 @@
 #include <sstream>
 
 
-Shapes::Shape::Shape() : text(L"test")
+Shapes::Shape::Shape() : text(L"test"), isSelected(false)
 {
-	pen.CreatePen(PS_DOT, 1, RGB(0,0,255));
+	pen.CreatePen(PS_DOT, 1, RGB(0,0,255)); // pen used for drag/draw
+	selectionPen.CreatePen(PS_DASH, 2, RGB(255, 0, 0)); // pen used for selection on click
 }
 
 // regel van drie (rule of three)
@@ -35,7 +36,10 @@ Shapes::Shape::~Shape(void)
 void Shapes::Shape::Draw(CDC *pDC)
 {
 	pDC->SetROP2(R2_NOTXORPEN);
-	pDC->SelectObject(&pen);
+	if (this->isSelected) // pak speciale selectie pen
+		pDC->SelectObject(&selectionPen);
+	else // neem de normale pen
+		pDC->SelectObject(&pen);
 }
 
 void Shapes::Shape::SetPoints(vector<CPoint> points)
@@ -78,4 +82,14 @@ bool Shapes::Shape::IsOn(CPoint point) const
 void Shapes::Shape::SetText(wstring newstring)
 {
 	this->text = newstring;
+}
+
+void Shapes::Shape::SetIsSelected(bool newselected)
+{
+	this->isSelected = newselected;
+}
+
+bool Shapes::Shape::GetIsSelected()
+{
+	return this->isSelected;
 }

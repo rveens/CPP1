@@ -13,6 +13,9 @@
 #include "Polygon.h"
 #include <fstream>
 #include <string>
+#include <algorithm>
+
+using std::for_each;
 
 #include <propkey.h>
 
@@ -140,6 +143,16 @@ void CEindOpdrDoc::DrawPolygon(CDC *pDC)
 void CEindOpdrDoc::FinishPolygon()
 {
 	savedShapes.push_back(std::move(selectionDrawShape));
+}
+
+void CEindOpdrDoc::TrySelection(CPoint p)
+{
+	if (!this->selectionDrawShape && !this->savedShapes.empty()) {
+		for_each(begin(savedShapes), end(savedShapes), [&](std::shared_ptr<Shapes::Shape> s) {
+			if (s->IsOn(p))
+				s->SetIsSelected(true);
+		});
+	}
 }
 
 // CEindOpdrDoc serialization

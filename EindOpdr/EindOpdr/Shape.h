@@ -24,10 +24,14 @@ namespace Shapes {
 		virtual bool IsOn(CPoint point) const;
 		virtual void SetPen(int nPenStyle, int nWidth, COLORREF crColor);
 		virtual void SetText(wstring newstring);
+		void SetIsSelected(bool newselected);
+		bool GetIsSelected();
 	protected:
 		CPen pen;
+		CPen selectionPen;
 		wstring text;
 		vector<CPoint> points; // usually 0 for start and 1 for end.
 		weak_ptr<Shape> child; // kind shape in de boom van gelinkte nodes.
+		bool isSelected;
 	};
 }
