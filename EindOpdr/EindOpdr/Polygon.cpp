@@ -37,9 +37,27 @@ string Shapes::Polygon::toString() const
 bool Shapes::Polygon::IsOn(CPoint point) const
 {
 	// neem de grootste x en y waardes in alle punten van de polygon.
-	int x, y;
+	int yHighest, xHighest, yLowest, xLowest;
+
+	yHighest = xHighest = point.y;
+	yLowest = xLowest = point. x;
 
 	for_each(begin(this->points), end(this->points), [&](CPoint p) {
-
+		// hoger dan hoogst?
+		if (p.x > xHighest)
+			xHighest = p.x;
+		if (p.y > yHighest)
+			yHighest = p.y;
+		// lager dan laagst?
+		if (p.x < xLowest)
+			xLowest = p.x;
+		if (p.y < yLowest)
+			yLowest = p.y;
 	});
+
+	if (point.x > xLowest && point.x < xHighest &&
+		point.y > yLowest && point.y < yHighest)
+		return true;
+	else
+		return false;
 }
