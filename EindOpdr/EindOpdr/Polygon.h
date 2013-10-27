@@ -15,5 +15,6 @@ namespace Shapes {
 		void Draw(CDC *pDC);
 		void SetPoints(vector<CPoint> points);
 		string toString() const;
+		bool IsOn(CPoint point) const;
 	};
 }

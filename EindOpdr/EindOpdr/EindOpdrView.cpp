@@ -130,7 +130,8 @@ void CEindOpdrView::OnLButtonDown(UINT nFlags, CPoint point)
 	if (!pDoc)
 		return;
 
-	pDoc->TrySelection(point);
+	if (!pDoc->TrySelection(point))
+		pDoc->ClearSelections();
 
 	if (this->poligonmode) {
 		pDoc->AddPolygonPoint(point);

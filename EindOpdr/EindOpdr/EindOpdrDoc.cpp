@@ -144,12 +144,27 @@ void CEindOpdrDoc::FinishPolygon()
 	}
 }
 
-void CEindOpdrDoc::TrySelection(CPoint p)
+bool CEindOpdrDoc::TrySelection(CPoint p)
+{
+	bool atLeastOneSelected = false;
+
+	if (!this->selectionDrawShape && !this->savedShapes.empty()) {
+		for_each(begin(savedShapes), end(savedShapes), [&](std::shared_ptr<Shapes::Shape> s) {
+			if (s->IsOn(p)) {
+				s->SetIsSelected(true);
+				atLeastOneSelected = true;
+			}
+		});
+	}
+
+	return atLeastOneSelected;
+}
+
+void CEindOpdrDoc::ClearSelections()
 {
 	if (!this->selectionDrawShape && !this->savedShapes.empty()) {
 		for_each(begin(savedShapes), end(savedShapes), [&](std::shared_ptr<Shapes::Shape> s) {
-			if (s->IsOn(p))
-				s->SetIsSelected(true);
+			s->SetIsSelected(false);
 		});
 	}
 }

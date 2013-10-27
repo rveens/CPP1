@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Polygon.h"
+#include <algorithm>
 
+using std::for_each;
 
 Shapes::Polygon::Polygon(void)
 {
@@ -30,4 +32,14 @@ string Shapes::Polygon::toString() const
 	// TODO tostring voor polygon.
 
 	return string();
+}
+
+bool Shapes::Polygon::IsOn(CPoint point) const
+{
+	// neem de grootste x en y waardes in alle punten van de polygon.
+	int x, y;
+
+	for_each(begin(this->points), end(this->points), [&](CPoint p) {
+
+	});
 }

@@ -44,7 +44,8 @@ public:
 	void AddPolygonPoint(CPoint point);
 	void DrawPolygon(CDC *pDC);
 	void FinishPolygon();
-	void TrySelection(CPoint p);
+	bool TrySelection(CPoint p);
+	void ClearSelections();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
