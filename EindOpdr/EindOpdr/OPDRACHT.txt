@@ -28,7 +28,7 @@ x Je kunt de vorm Veelhoek kiezen: klik een willekeurig aantal punten en er word
 x Er komt een vinkje in het menu vóór de huidige keuzes
 x Tijdens het tekenen met de muis wordt de vorm in stippellijntjes getekend, pas in gewenste kleur bij loslaten
 - Er is een undo-functie (ctrl-z)
-- Je kunt objecten selecteren met een klik. Maak een methode virtual bool Shape::IsOn(CPoint point) const;
+x Je kunt objecten selecteren met een klik. Maak een methode virtual bool Shape::IsOn(CPoint point) const;
 - Je kunt geselecteerde objecten verwijderen
 - Als nodig wordt alles opnieuw getekend (bijvoorbeeld na minimize-maximize)
 - Zorg voor logisch gedrag als de muisaanwijzer tijdens slepen het venster verlaat en dan al dan niet wordt losgelaten

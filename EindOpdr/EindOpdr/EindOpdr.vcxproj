@@ -108,6 +108,7 @@
     <ClInclude Include="EindOpdrDoc.h" />
     <ClInclude Include="EindOpdrView.h" />
     <ClInclude Include="Ellipse.h" />
+    <ClInclude Include="InputTextDialog.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Polygon.h" />
     <ClInclude Include="Rectangle.h" />
@@ -123,6 +124,7 @@
     <ClCompile Include="EindOpdrDoc.cpp" />
     <ClCompile Include="EindOpdrView.cpp" />
     <ClCompile Include="Ellipse.cpp" />
+    <ClCompile Include="InputTextDialog.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="Polygon.cpp" />
     <ClCompile Include="Rectangle.cpp" />

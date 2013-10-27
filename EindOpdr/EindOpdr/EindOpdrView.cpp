@@ -16,6 +16,11 @@
 #include "Square.h"
 #include "Ellipse.h"
 #include "Polygon.h"
+#include "InputTextDialog.h"
+
+#include <memory>
+
+using std::unique_ptr;
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -39,6 +44,7 @@ BEGIN_MESSAGE_MAP(CEindOpdrView, CView)
 	ON_COMMAND(ID_SHAPE_SQUARE, &CEindOpdrView::OnShapeSquare)
 	ON_COMMAND(ID_SHAPE_ELLIPSE, &CEindOpdrView::OnShapeEllipse)
 	ON_COMMAND(ID_SHAPE_POLYGON, &CEindOpdrView::OnShapePolygon)
+	ON_WM_RBUTTONDOWN()
 END_MESSAGE_MAP()
 
 // CEindOpdrView construction/destruction
@@ -145,6 +151,27 @@ void CEindOpdrView::OnLButtonDown(UINT nFlags, CPoint point)
 	CView::OnLButtonDown(nFlags, point);
 }
 
+void CEindOpdrView::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+	CEindOpdrDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	Shapes::Shape *s = pDoc->TrySelection(point);
+
+	if (s) {
+		std::unique_ptr<InputTextDialog> dialog = std::unique_ptr<InputTextDialog>(new InputTextDialog());
+		dialog->SetValue(s->GetText().c_str());
+		dialog->DoModal();
+
+		s->SetText(wstring(dialog->GetValue()));
+		this->Invalidate();
+	}
+
+	CView::OnRButtonDown(nFlags, point);
+}
 
 void CEindOpdrView::OnLButtonUp(UINT nFlags, CPoint point)
 {

@@ -15,6 +15,7 @@
 #include <string>
 #include <algorithm>
 
+using std::find_if;
 using std::for_each;
 
 #include <propkey.h>
@@ -144,20 +145,22 @@ void CEindOpdrDoc::FinishPolygon()
 	}
 }
 
-bool CEindOpdrDoc::TrySelection(CPoint p)
+Shapes::Shape *CEindOpdrDoc::TrySelection(CPoint p)
 {
-	bool atLeastOneSelected = false;
+	Shapes::Shape *shape = nullptr;
 
 	if (!this->selectionDrawShape && !this->savedShapes.empty()) {
-		for_each(begin(savedShapes), end(savedShapes), [&](std::shared_ptr<Shapes::Shape> s) {
+		find_if(begin(savedShapes), end(savedShapes), [&](std::shared_ptr<Shapes::Shape> s) {
 			if (s->IsOn(p)) {
 				s->SetIsSelected(true);
-				atLeastOneSelected = true;
+				shape = s.get();
+				return true;
 			}
+			return false;
 		});
 	}
 
-	return atLeastOneSelected;
+	return shape;
 }
 
 void CEindOpdrDoc::ClearSelections()

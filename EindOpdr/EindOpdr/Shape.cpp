@@ -3,7 +3,7 @@
 #include <sstream>
 
 
-Shapes::Shape::Shape() : text(L"test"), isSelected(false)
+Shapes::Shape::Shape() : text(L""), isSelected(false)
 {
 	pen.CreatePen(PS_DOT, 1, RGB(0,0,255)); // pen used for drag/draw
 	selectionPen.CreatePen(PS_DASH, 2, RGB(255, 0, 0)); // pen used for selection on click
@@ -82,6 +82,11 @@ bool Shapes::Shape::IsOn(CPoint point) const
 void Shapes::Shape::SetText(wstring newstring)
 {
 	this->text = newstring;
+}
+
+wstring Shapes::Shape::GetText()
+{
+	return this->text;
 }
 
 void Shapes::Shape::SetIsSelected(bool newselected)

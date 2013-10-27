@@ -44,7 +44,7 @@ public:
 	void AddPolygonPoint(CPoint point);
 	void DrawPolygon(CDC *pDC);
 	void FinishPolygon();
-	bool TrySelection(CPoint p);
+	Shapes::Shape *TrySelection(CPoint p);
 	void ClearSelections();
 #ifdef _DEBUG
 	virtual void AssertValid() const;

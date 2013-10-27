@@ -150,6 +150,17 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,113,41,50,14,WS_GROUP
 END
 
+IDD_INPUTTEXTDIALOG DIALOGEX 0, 0, 255, 124
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,198,103,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,198,103,50,14
+    EDITTEXT        IDC_EDIT1,7,19,241,79,ES_AUTOHSCROLL
+    LTEXT           "Tekst voor in de shape:",IDC_STATIC,90,7,76,8
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -205,9 +216,16 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 55
     END
+
+    IDD_INPUTTEXTDIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 248
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 117
+    END
 END
 #endif    // APSTUDIO_INVOKED
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
