@@ -5,7 +5,6 @@
 
 #pragma once
 #include <vector>
-#include <list>
 #include "Shape.h"
 #include "Rectangle.h"
 #include <memory>
@@ -54,7 +53,7 @@ public:
 #endif
 
 protected:
-	std::list<std::shared_ptr<Shapes::Shape>> savedShapes;
+	std::vector<std::shared_ptr<Shapes::Shape>> savedShapes;
 	std::unique_ptr<Shapes::Shape> selectionDrawShape;
 	CPoint startPoint;
 	CPoint endPoint;
