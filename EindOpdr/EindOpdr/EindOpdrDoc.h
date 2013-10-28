@@ -44,7 +44,6 @@ public:
 
 	void AddPolygonPoint(CPoint point);
 	void DrawPolygon(CDC *pDC);
-	void FinishPolygon();
 	std::weak_ptr<Shapes::Shape> TrySelection(CPoint p);
 	void ClearSelections();
 	void DeleteSelections();
@@ -54,6 +53,8 @@ public:
 	COLORREF GetShapeOutLineColor();
 	void SetLineColor(COLORREF c);
 	COLORREF GetLineColor();
+	void ChangeShapeColorsSelected();
+	void saveCurrentDrawShape();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
@@ -66,11 +67,14 @@ protected:
 	CPoint endPoint;
 	std::vector<CPoint> polygonpoints;
 	std::weak_ptr<Shapes::Shape> linetemp;
-	COLORREF shapeOutLineColor;
-	COLORREF lineColor;
 
-private: // private functies
-	void saveCurrentDrawShape();
+	// stijlen en kleuren die atm zijn ingesteld.
+	COLORREF shapeOutLineColor;
+	int shapOutLineStyle;
+	int shapeOutLineThickness;
+	COLORREF lineColor;
+	int lineStyle;
+	int lineThickness;
 
 // Generated message map functions
 protected:

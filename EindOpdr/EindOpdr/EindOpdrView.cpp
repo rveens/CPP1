@@ -347,7 +347,7 @@ void CEindOpdrView::OnShapePolygon()
 
 	if (this->viewmode == viewmode::POLYGON) {
 		pMenu->CheckMenuItem(ID_SHAPE_POLYGON, MF_UNCHECKED | MF_BYCOMMAND); // uit
-		pDoc->FinishPolygon();
+		pDoc->saveCurrentDrawShape();
 		this->Invalidate();
 		this->viewmode = viewmode::NORMAL;
 	} else if(this->viewmode == viewmode::NORMAL) {
@@ -402,6 +402,8 @@ void CEindOpdrView::OnShapeShapecolor()
 
 	if (cd.DoModal() == IDOK) 
 		pDoc->SetShapeOutLineColor(cd.GetColor());
+	pDoc->ChangeShapeColorsSelected();
+	this->Invalidate();
 }
 
 void CEindOpdrView::OnShapeLinecolor()
@@ -417,6 +419,8 @@ void CEindOpdrView::OnShapeLinecolor()
 
 	if (cd.DoModal() == IDOK) 
 		pDoc->SetLineColor(cd.GetColor());
+	pDoc->ChangeShapeColorsSelected();
+	this->Invalidate();
 }
 
 void CEindOpdrView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)

@@ -35,7 +35,8 @@ END_MESSAGE_MAP()
 
 // CEindOpdrDoc construction/destruction
 
-CEindOpdrDoc::CEindOpdrDoc() : shapeOutLineColor(RGB(0, 0, 0)), lineColor(RGB(0, 0, 0))
+CEindOpdrDoc::CEindOpdrDoc() : shapeOutLineColor(RGB(0, 0, 0)), shapOutLineStyle(PS_COSMETIC), shapeOutLineThickness(1),
+	lineColor(RGB(0, 0, 0)), lineStyle(PS_DASH), lineThickness(1)
 {
 	// TODO: add one-time construction code here
 	savedShapes = std::vector<std::shared_ptr<Shapes::Shape>>();
@@ -75,15 +76,8 @@ void CEindOpdrDoc::StartSelection(CPoint startpoint)
 
 void CEindOpdrDoc::StopSelection(CPoint endpoint)
 {
-	// Check of we nu een selectionshape hebben, 
-	if (selectionDrawShape) {
-		/* verander de pen naar de uiteindelijke kleur */
-		selectionDrawShape->SetPen(PS_COSMETIC, 1, RGB(0,0,0));
-
-		/* sla de huidige op in de savedShapes lijst. */
-		saveCurrentDrawShape();
-	}
-
+	/* sla de huidige op in de savedShapes lijst. */
+	saveCurrentDrawShape();
 	this->startPoint.x = -1;
 	this->endPoint.x = -1;
 }
@@ -130,15 +124,6 @@ void CEindOpdrDoc::DrawPolygon(CDC *pDC)
 {
 	this->selectionDrawShape->SetPoints(this->polygonpoints);
 	this->selectionDrawShape->Draw(pDC);
-}
-
-void CEindOpdrDoc::FinishPolygon()
-{
-	if (selectionDrawShape) {
-		/* verander de pen naar de uiteindelijke kleur */
-		selectionDrawShape->SetPen(PS_COSMETIC, 1, RGB(0,0,0));
-		this->saveCurrentDrawShape();
-	}
 }
 
 std::weak_ptr<Shapes::Shape> CEindOpdrDoc::TrySelection(CPoint p)
@@ -231,11 +216,23 @@ COLORREF CEindOpdrDoc::GetLineColor()
 	return this->lineColor;
 }
 
+void CEindOpdrDoc::ChangeShapeColorsSelected()
+{
+	for_each(begin(this->savedShapes), end(this->savedShapes), [&](std::shared_ptr<Shapes::Shape> s){
+		if (s->GetIsSelected()) {
+			s->SetPen(this->shapOutLineStyle, this->shapeOutLineThickness, this->shapeOutLineColor);
+			s->SetLinePen(this->lineStyle, this->lineThickness, this->lineColor);
+		}
+	});
+}
+
 /* private functies */
 void CEindOpdrDoc::saveCurrentDrawShape()
 {
 	if (this->selectionDrawShape) {
-		selectionDrawShape->SetLinePen(PS_DASH, 1, this->lineColor);
+		/* verander de pen naar de uiteindelijke kleur */
+		selectionDrawShape->SetPen(this->shapOutLineStyle, this->shapeOutLineThickness, this->shapeOutLineColor);
+		selectionDrawShape->SetLinePen(this->lineStyle, this->lineThickness, this->lineColor);
 		savedShapes.push_back(std::move(selectionDrawShape));
 	}
 	/* selectiondraw shape is nu null, omdat move is uitgevoerd. */
