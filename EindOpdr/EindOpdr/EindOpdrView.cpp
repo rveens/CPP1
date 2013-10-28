@@ -47,6 +47,8 @@ BEGIN_MESSAGE_MAP(CEindOpdrView, CView)
 	ON_WM_RBUTTONDOWN()
 	ON_WM_KEYDOWN()
 	ON_COMMAND(ID_SHAPE_LINE, &CEindOpdrView::OnShapeLine)
+	ON_COMMAND(ID_SHAPE_SHAPECOLOR, &CEindOpdrView::OnShapeShapecolor)
+	ON_COMMAND(ID_SHAPE_LINECOLOR, &CEindOpdrView::OnShapeLinecolor)
 END_MESSAGE_MAP()
 
 // CEindOpdrView construction/destruction
@@ -385,6 +387,36 @@ void CEindOpdrView::OnShapeLine()
 		this->viewmode = viewmode::NORMAL;
 		pMenu->CheckMenuItem(ID_SHAPE_LINE, MFS_UNCHECKED | MF_BYCOMMAND);
 	}
+}
+
+void CEindOpdrView::OnShapeShapecolor()
+{
+	// TODO: Add your command handler code here
+	CEindOpdrDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	/* Maak een kleurendialoog */
+	CMFCColorDialog cd;
+
+	if (cd.DoModal() == IDOK) 
+		pDoc->SetShapeOutLineColor(cd.GetColor());
+}
+
+void CEindOpdrView::OnShapeLinecolor()
+{
+	// TODO: Add your command handler code here
+	CEindOpdrDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	/* Maak een kleurendialoog */
+	CMFCColorDialog cd;
+
+	if (cd.DoModal() == IDOK) 
+		pDoc->SetLineColor(cd.GetColor());
 }
 
 void CEindOpdrView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)

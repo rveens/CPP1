@@ -57,6 +57,8 @@ public:
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnShapeLine();
+	afx_msg void OnShapeShapecolor();
+	afx_msg void OnShapeLinecolor();
 };
 
 #ifndef _DEBUG  // debug version in EindOpdrView.cpp

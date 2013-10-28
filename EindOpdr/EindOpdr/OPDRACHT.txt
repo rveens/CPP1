@@ -22,7 +22,7 @@ Daar komt nog bij:
 Functionele eisen
 x Je kunt kiezen uit de vormen: Vierkant, Rechthoek, Cirkel, Ellips en...
 x Je kunt de vorm Veelhoek kiezen: klik een willekeurig aantal punten en er worden lijntjes tussen getrokken
-- Er kunnen lijnen tussen vormen getrokken worden (diagrammen)
+x Er kunnen lijnen tussen vormen getrokken worden (diagrammen)
 x Er kan tekst in een vorm gezet worden
 - Lijndikte en -type kunnen per vorm of verbindingslijn worden ingesteld
 x Er komt een vinkje in het menu vóór de huidige keuzes

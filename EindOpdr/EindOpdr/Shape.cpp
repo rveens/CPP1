@@ -103,6 +103,12 @@ void Shapes::Shape::SetPen(int nPenStyle, int nWidth, COLORREF crColor)
 	this->pen.CreatePen(nPenStyle, nWidth, crColor);
 }
 
+void Shapes::Shape::SetLinePen(int nPenStyle, int nWidth, COLORREF crColor)
+{
+	this->linePen.DeleteObject();
+	this->linePen.CreatePen(nPenStyle, nWidth, crColor);
+}
+
 bool Shapes::Shape::IsOn(CPoint point) const
 {
 	bool returnValue = false;

@@ -50,6 +50,10 @@ public:
 	void DeleteSelections();
 	bool TryLine(CPoint p);
 	void ClearLineTemp();
+	void SetShapeOutLineColor(COLORREF c);
+	COLORREF GetShapeOutLineColor();
+	void SetLineColor(COLORREF c);
+	COLORREF GetLineColor();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
@@ -62,6 +66,11 @@ protected:
 	CPoint endPoint;
 	std::vector<CPoint> polygonpoints;
 	std::weak_ptr<Shapes::Shape> linetemp;
+	COLORREF shapeOutLineColor;
+	COLORREF lineColor;
+
+private: // private functies
+	void saveCurrentDrawShape();
 
 // Generated message map functions
 protected:

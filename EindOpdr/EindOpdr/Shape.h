@@ -24,6 +24,7 @@ namespace Shapes {
 		virtual std::string toString() const;
 		virtual bool IsOn(CPoint point) const;
 		virtual void SetPen(int nPenStyle, int nWidth, COLORREF crColor);
+		void SetLinePen(int nPenStyle, int nWidth, COLORREF crColor);
 		void SetText(wstring newstring);
 		wstring GetText();
 		void SetIsSelected(bool newselected);

@@ -35,7 +35,7 @@ END_MESSAGE_MAP()
 
 // CEindOpdrDoc construction/destruction
 
-CEindOpdrDoc::CEindOpdrDoc()
+CEindOpdrDoc::CEindOpdrDoc() : shapeOutLineColor(RGB(0, 0, 0)), lineColor(RGB(0, 0, 0))
 {
 	// TODO: add one-time construction code here
 	savedShapes = std::vector<std::shared_ptr<Shapes::Shape>>();
@@ -81,8 +81,7 @@ void CEindOpdrDoc::StopSelection(CPoint endpoint)
 		selectionDrawShape->SetPen(PS_COSMETIC, 1, RGB(0,0,0));
 
 		/* sla de huidige op in de savedShapes lijst. */
-		savedShapes.push_back(std::move(selectionDrawShape));
-		/* selectiondraw shape is nu null, omdat move is uitgevoerd. */
+		saveCurrentDrawShape();
 	}
 
 	this->startPoint.x = -1;
@@ -121,8 +120,6 @@ void CEindOpdrDoc::DrawSavedShapes(CDC *pDC)
 	});
 }
 
-
-
 // polygon teken functies
 void CEindOpdrDoc::AddPolygonPoint(CPoint point)
 {
@@ -140,8 +137,7 @@ void CEindOpdrDoc::FinishPolygon()
 	if (selectionDrawShape) {
 		/* verander de pen naar de uiteindelijke kleur */
 		selectionDrawShape->SetPen(PS_COSMETIC, 1, RGB(0,0,0));
-
-		savedShapes.push_back(std::move(selectionDrawShape));
+		this->saveCurrentDrawShape();
 	}
 }
 
@@ -212,6 +208,37 @@ bool CEindOpdrDoc::TryLine(CPoint p)
 		} else
 			return false;
 	}	
+}
+
+/* Getters / Setters */
+void CEindOpdrDoc::SetShapeOutLineColor(COLORREF c)
+{
+	this->shapeOutLineColor = c;
+}
+
+COLORREF CEindOpdrDoc::GetShapeOutLineColor()
+{
+	return this->shapeOutLineColor;
+}
+
+void CEindOpdrDoc::SetLineColor(COLORREF c)
+{
+	this->lineColor = c;
+}
+
+COLORREF CEindOpdrDoc::GetLineColor()
+{
+	return this->lineColor;
+}
+
+/* private functies */
+void CEindOpdrDoc::saveCurrentDrawShape()
+{
+	if (this->selectionDrawShape) {
+		selectionDrawShape->SetLinePen(PS_DASH, 1, this->lineColor);
+		savedShapes.push_back(std::move(selectionDrawShape));
+	}
+	/* selectiondraw shape is nu null, omdat move is uitgevoerd. */
 }
 
 // CEindOpdrDoc serialization

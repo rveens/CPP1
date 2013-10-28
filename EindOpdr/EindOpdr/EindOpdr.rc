@@ -108,6 +108,9 @@ BEGIN
         MENUITEM "Polygon",                     ID_SHAPE_POLYGON
         MENUITEM SEPARATOR
         MENUITEM "Line",                        ID_SHAPE_LINE
+        MENUITEM SEPARATOR
+        MENUITEM "Shape Color",                 ID_SHAPE_SHAPECOLOR
+        MENUITEM "Line Color",                  ID_SHAPE_LINECOLOR
     END
 END
 
