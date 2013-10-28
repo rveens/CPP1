@@ -41,12 +41,15 @@ public:
 	void DrawSelection(CDC *pDC, CPoint currentMousePosition);
 	void SetCurrentDrawShape(std::unique_ptr<Shapes::Shape> s);
 	void DrawSavedShapes(CDC *pDC);
+
 	void AddPolygonPoint(CPoint point);
 	void DrawPolygon(CDC *pDC);
 	void FinishPolygon();
-	Shapes::Shape *TrySelection(CPoint p);
+	std::weak_ptr<Shapes::Shape> TrySelection(CPoint p);
 	void ClearSelections();
 	void DeleteSelections();
+	bool TryLine(CPoint p);
+	void ClearLineTemp();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
@@ -58,6 +61,7 @@ protected:
 	CPoint startPoint;
 	CPoint endPoint;
 	std::vector<CPoint> polygonpoints;
+	std::weak_ptr<Shapes::Shape> linetemp;
 
 // Generated message map functions
 protected:

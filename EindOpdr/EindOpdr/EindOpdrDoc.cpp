@@ -145,15 +145,15 @@ void CEindOpdrDoc::FinishPolygon()
 	}
 }
 
-Shapes::Shape *CEindOpdrDoc::TrySelection(CPoint p)
+std::weak_ptr<Shapes::Shape> CEindOpdrDoc::TrySelection(CPoint p)
 {
-	Shapes::Shape *shape = nullptr;
+	std::weak_ptr<Shapes::Shape> shape;
 
 	if (!this->selectionDrawShape && !this->savedShapes.empty()) {
 		find_if(begin(savedShapes), end(savedShapes), [&](std::shared_ptr<Shapes::Shape> s) {
 			if (s->IsOn(p)) {
 				s->SetIsSelected(true);
-				shape = s.get();
+				shape = s;
 				return true;
 			}
 			return false;
@@ -178,6 +178,40 @@ void CEindOpdrDoc::DeleteSelections()
 		return s->GetIsSelected();
 	});
 	this->savedShapes.erase(remiter, end(this->savedShapes));
+}
+
+
+void CEindOpdrDoc::ClearLineTemp()
+{
+	this->linetemp.reset(); // gooi linetemp weg
+}
+
+bool CEindOpdrDoc::TryLine(CPoint p)
+{
+	/* 
+	* Kijk naar linetemp:
+	* Bestaat hij niet? -> stel hem in.
+	* Bestaat hij wel? -> leg de verbinding.
+	*/
+
+	auto sp_p1 = this->linetemp.lock(); // krijg ik een reference? niet? dan is deze shared_ptr verlopen.
+
+	if (!sp_p1) { // verlopen? stel in en klaar
+		this->linetemp = this->TrySelection(p); // sla linetemp op
+		return false;
+	} else { // linetemp is een bestaand object
+		auto sp_p2 = this->TrySelection(p).lock(); // neem een referentie naar de tweede vorm.
+
+		if (sp_p1 && sp_p2 && (sp_p1 != sp_p2)) { // bestaan beide objecten nog? (en zijn ze niet gelijk aan elkaar)
+			// stel een reference in van de een naar de ander...
+			// verder moet de ondraw maar goed werken.
+			sp_p1->SetChild(sp_p2);
+			// Als het goed gegaan is, resetten we de linetemp pointer.
+			this->linetemp.reset();
+			return true;
+		} else
+			return false;
+	}	
 }
 
 // CEindOpdrDoc serialization

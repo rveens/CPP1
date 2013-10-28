@@ -20,6 +20,7 @@ namespace Shapes {
 		virtual ~Shape(void);
 		virtual void Draw(CDC *pDC) = 0;
 		virtual void SetPoints(vector<CPoint> points);
+		vector<CPoint> GetPoints();
 		virtual std::string toString() const;
 		virtual bool IsOn(CPoint point) const;
 		virtual void SetPen(int nPenStyle, int nWidth, COLORREF crColor);
@@ -27,12 +28,20 @@ namespace Shapes {
 		wstring GetText();
 		void SetIsSelected(bool newselected);
 		bool GetIsSelected();
+		void SetChild(weak_ptr<Shape> s);
+		weak_ptr<Shape> GetChild();
+	// values
 	protected:
 		CPen pen;
 		CPen selectionPen;
+		CPen linePen;
 		wstring text;
 		vector<CPoint> points; // usually 0 for start and 1 for end.
 		weak_ptr<Shape> child; // kind shape in de boom van gelinkte nodes.
 		bool isSelected;
+	// functions
+	protected:
+		virtual void DrawLine(CDC *pDC);
 	};
+
 }

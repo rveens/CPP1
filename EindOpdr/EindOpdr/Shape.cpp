@@ -6,6 +6,7 @@
 Shapes::Shape::Shape() : text(L""), isSelected(false)
 {
 	pen.CreatePen(PS_DOT, 1, RGB(0,0,255)); // pen used for drag/draw
+	linePen.CreatePen(PS_DASH, 1, RGB(0, 0, 0)); // pen used for lines
 	selectionPen.CreatePen(PS_DASH, 2, RGB(255, 0, 0)); // pen used for selection on click
 }
 
@@ -36,10 +37,29 @@ Shapes::Shape::~Shape(void)
 void Shapes::Shape::Draw(CDC *pDC)
 {
 	pDC->SetROP2(R2_NOTXORPEN);
+
+	// Probeer de lijn te tekenen.
+	pDC->SelectObject(&linePen); // speciale lijn pen
+	this->DrawLine(pDC);
+
 	if (this->isSelected) // pak speciale selectie pen
 		pDC->SelectObject(&selectionPen);
 	else // neem de normale pen
 		pDC->SelectObject(&pen);
+}
+
+void Shapes::Shape::DrawLine(CDC *pDC)
+{
+	CPoint originalPos = pDC->GetCurrentPosition();
+	auto scp = this->child.lock();
+
+	/* teken van de huidige shape naar de child shape, als die bestaat, een lijn. */
+	if (scp && !this->points.empty() && !scp->GetPoints().empty()) { // punten van de shapes mogen niet leeg zijn.
+		pDC->MoveTo(this->points[0]);
+		pDC->LineTo(scp->GetPoints()[0]);
+		// Zet de positie terug op de oude
+		pDC->MoveTo(originalPos);
+	}
 }
 
 void Shapes::Shape::SetPoints(vector<CPoint> points)
@@ -48,6 +68,11 @@ void Shapes::Shape::SetPoints(vector<CPoint> points)
 		throw std::invalid_argument("shape expected at least two points");
 	else
 		this->points = points;
+}
+
+vector<CPoint> Shapes::Shape::GetPoints()
+{
+	return this->points;
 }
 
 std::string Shapes::Shape::toString() const
@@ -97,4 +122,14 @@ void Shapes::Shape::SetIsSelected(bool newselected)
 bool Shapes::Shape::GetIsSelected()
 {
 	return this->isSelected;
+}
+
+void Shapes::Shape::SetChild(weak_ptr<Shapes::Shape> s)
+{
+	this->child = s;
+}
+	
+weak_ptr<Shapes::Shape> Shapes::Shape::GetChild()
+{
+	return this->child;
 }
