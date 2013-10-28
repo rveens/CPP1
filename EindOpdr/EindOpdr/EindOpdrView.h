@@ -4,6 +4,9 @@
 
 #pragma once
 
+namespace viewmode {
+	enum viewmode { NORMAL, POLYGON, LINE };
+};
 
 class CEindOpdrView : public CView
 {
@@ -15,7 +18,7 @@ protected: // create from serialization only
 public:
 	CEindOpdrDoc* GetDocument() const;
 private:
-	BOOL poligonmode;
+	viewmode::viewmode viewmode;
 
 // Operations
 public:
@@ -53,6 +56,7 @@ public:
 	afx_msg void OnShapePolygon();
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg void OnShapeLine();
 };
 
 #ifndef _DEBUG  // debug version in EindOpdrView.cpp

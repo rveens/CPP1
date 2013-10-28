@@ -46,6 +46,7 @@ BEGIN_MESSAGE_MAP(CEindOpdrView, CView)
 	ON_COMMAND(ID_SHAPE_POLYGON, &CEindOpdrView::OnShapePolygon)
 	ON_WM_RBUTTONDOWN()
 	ON_WM_KEYDOWN()
+	ON_COMMAND(ID_SHAPE_LINE, &CEindOpdrView::OnShapeLine)
 END_MESSAGE_MAP()
 
 // CEindOpdrView construction/destruction
@@ -53,7 +54,7 @@ END_MESSAGE_MAP()
 CEindOpdrView::CEindOpdrView()
 {
 	// TODO: add construction code here
-	poligonmode = FALSE;
+	this->viewmode = viewmode::NORMAL;
 }
 
 CEindOpdrView::~CEindOpdrView()
@@ -78,7 +79,7 @@ void CEindOpdrView::OnDraw(CDC* pDC)
 		return;
 
 	// TODO: add draw code for native data here
-	if (poligonmode)
+	if (this->viewmode == viewmode::POLYGON)
 		pDoc->DrawPolygon(pDC);
 	pDoc->DrawSavedShapes(pDC);
 
@@ -140,7 +141,7 @@ void CEindOpdrView::OnLButtonDown(UINT nFlags, CPoint point)
 	if (!pDoc->TrySelection(point))
 		pDoc->ClearSelections();
 
-	if (this->poligonmode) {
+	if (this->viewmode == viewmode::POLYGON) {
 		pDoc->AddPolygonPoint(point);
 		CDC *pDC = GetDC();
 		pDoc->DrawPolygon(pDC);
@@ -184,7 +185,7 @@ void CEindOpdrView::OnLButtonUp(UINT nFlags, CPoint point)
 	if (!pDoc)
 		return;
 
-	if (this->poligonmode)
+	if (this->viewmode == viewmode::POLYGON)
 		; // niets
 	else
 		pDoc->StopSelection(point);
@@ -214,7 +215,7 @@ void CEindOpdrView::OnMouseMove(UINT nFlags, CPoint point)
 	CDC *pDC = GetDC();
 
 	if (GetKeyState(VK_LBUTTON) & 0x80) {
-		if (this->poligonmode)
+		if (this->viewmode == viewmode::POLYGON)
 			; // niets
 		else
 			pDoc->DrawSelection(pDC, point);
@@ -235,7 +236,7 @@ void CEindOpdrView::OnShapeRectangle()
 	if (!pDoc)
 		return;
 
-	if (!poligonmode) { // mag alleen als polygonmode uitstaat
+	if (this->viewmode != viewmode::POLYGON) { // mag alleen als polygonmode uitstaat
 		pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Rectangle()));
 
 		pMenu->CheckMenuItem(ID_SHAPE_SQUARE, MF_UNCHECKED | MF_BYCOMMAND);
@@ -258,7 +259,7 @@ void CEindOpdrView::OnShapeCircle()
 	if (!pDoc)
 		return;
 
-	if (!poligonmode) { // mag alleen als polygonmode uitstaat
+	if (this->viewmode != viewmode::POLYGON) { // mag alleen als polygonmode uitstaat
 		pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Circle()));
 
 		pMenu->CheckMenuItem(ID_SHAPE_SQUARE, MF_UNCHECKED | MF_BYCOMMAND);
@@ -281,7 +282,7 @@ void CEindOpdrView::OnShapeSquare()
 	if (!pDoc)
 		return;
 
-	if (!poligonmode) { // mag alleen als polygonmode uitstaat
+	if (this->viewmode != viewmode::POLYGON) { // mag alleen als polygonmode uitstaat
 		pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Square()));
 		pMenu->CheckMenuItem(ID_SHAPE_CIRCLE, MF_UNCHECKED | MF_BYCOMMAND);
 		pMenu->CheckMenuItem(ID_SHAPE_SQUARE, MF_UNCHECKED | MF_BYCOMMAND);
@@ -302,7 +303,7 @@ void CEindOpdrView::OnShapeEllipse()
 	if (!pDoc)
 		return;
 
-	if (!poligonmode) { // mag alleen als polygonmode uitstaat
+	if (!this->viewmode != viewmode::POLYGON) { // mag alleen als polygonmode uitstaat
 		pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Ellipse()));
 		pMenu->CheckMenuItem(ID_SHAPE_CIRCLE, MF_UNCHECKED | MF_BYCOMMAND);
 		pMenu->CheckMenuItem(ID_SHAPE_SQUARE, MF_UNCHECKED | MF_BYCOMMAND);
@@ -334,13 +335,18 @@ void CEindOpdrView::OnShapePolygon()
 		pMenu->CheckMenuItem(ID_SHAPE_POLYGON, MF_UNCHECKED | MF_BYCOMMAND); // uit
 		pDoc->FinishPolygon();
 		this->Invalidate();
-		poligonmode = FALSE;
+		this->viewmode = viewmode::NORMAL;
 
 	} else {
 		pMenu->CheckMenuItem(ID_SHAPE_POLYGON, MF_CHECKED | MF_BYCOMMAND); // aan
-		poligonmode = TRUE;
+		this->viewmode = viewmode::POLYGON;
 		pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Polygon));
 	}
+}
+
+void CEindOpdrView::OnShapeLine()
+{
+	// TODO: Add your command handler code here
 }
 
 void CEindOpdrView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)

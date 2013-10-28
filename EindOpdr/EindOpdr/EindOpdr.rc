@@ -106,6 +106,8 @@ BEGIN
         MENUITEM "Ellipse",                     ID_SHAPE_ELLIPSE
         MENUITEM "Circle",                      ID_SHAPE_CIRCLE
         MENUITEM "Polygon",                     ID_SHAPE_POLYGON
+        MENUITEM SEPARATOR
+        MENUITEM "Line",                        ID_SHAPE_LINE
     END
 END
 
@@ -226,6 +228,7 @@ BEGIN
     END
 END
 #endif    // APSTUDIO_INVOKED
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
