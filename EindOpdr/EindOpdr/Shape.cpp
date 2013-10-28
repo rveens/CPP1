@@ -52,17 +52,22 @@ void Shapes::Shape::DrawLine(CDC *pDC)
 {
 	CPoint originalPos = pDC->GetCurrentPosition(); // positie die we nu even opslaan.
 	auto scp = this->child.lock(); // shared_ptr die nu even strong is (mits de shape wel bestaat), gedurende de scope van de ze functie.
-	int childMiddleX, childMiddleY; // voor het bepalen van het midden.
+	int currShapeMiddleX, currShapeMiddleY, childMiddleX, childMiddleY; // voor het bepalen van het midden.
 
 	/* teken van de huidige shape naar de child shape, als die bestaat, een lijn. */
 	if (scp && !this->points.empty() && !scp->GetPoints().empty()) { // punten van de shapes mogen niet leeg zijn.
-		pDC->MoveTo( (this->points[1].x - this->points[0].x) / 2 + this->points[0].x, (this->points[1].y - this->points[0].y ) / 2 + this->points[0].y);
 		/* shape gaat uit van twee punten, andere vormen moeten drawline maar overriden */
-		/* we bepane het midden van de twee punten, van de child shape */
+
+		/* we bepalen het midden van de twee punten, van de huidige shape (this) */
+		currShapeMiddleX = (this->points[1].x - this->points[0].x) / 2 + this->points[0].x;
+		currShapeMiddleY = (this->points[1].y - this->points[0].y ) / 2 + this->points[0].y;
+		pDC->MoveTo(currShapeMiddleX, currShapeMiddleY);
+
+		/* we bepalen het midden van de twee punten, van de child shape */
 		childMiddleX = (scp->GetPoints()[1].x - scp->GetPoints()[0].x) / 2 + scp->GetPoints()[0].x;
 		childMiddleY = (scp->GetPoints()[1].y - scp->GetPoints()[0].y) / 2 + scp->GetPoints()[0].y;
-
 		pDC->LineTo(childMiddleX, childMiddleY);
+
 		// Zet de positie terug op de oude
 		pDC->MoveTo(originalPos);
 	}
