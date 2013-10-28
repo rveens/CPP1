@@ -359,6 +359,10 @@ void CEindOpdrView::OnShapeLine()
 {
 	// TODO: Add your command handler code here
 	CMenu *pMenu = AfxGetMainWnd()->GetMenu();
+	CEindOpdrDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
 
 	if (this->viewmode == viewmode::NORMAL) {
 		// zet alle vinkjes uit
@@ -372,6 +376,9 @@ void CEindOpdrView::OnShapeLine()
 
 		// zet lijn aan
 		pMenu->CheckMenuItem(ID_SHAPE_LINE, MFS_CHECKED | MF_BYCOMMAND);
+		// selecties gaan weg als we in line mode gaan
+		pDoc->ClearSelections();
+		this->Invalidate();
 
 		this->viewmode = viewmode::LINE;
 	} else if (this->viewmode == viewmode::LINE) {
