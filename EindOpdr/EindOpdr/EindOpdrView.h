@@ -52,6 +52,7 @@ public:
 	afx_msg void OnShapeEllipse();
 	afx_msg void OnShapePolygon();
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 };
 
 #ifndef _DEBUG  // debug version in EindOpdrView.cpp

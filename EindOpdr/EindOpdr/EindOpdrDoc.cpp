@@ -38,7 +38,7 @@ END_MESSAGE_MAP()
 CEindOpdrDoc::CEindOpdrDoc()
 {
 	// TODO: add one-time construction code here
-	savedShapes = std::vector<std::shared_ptr<Shapes::Shape>>();
+	savedShapes = std::list<std::shared_ptr<Shapes::Shape>>();
 	startPoint.x = -1;
 	endPoint.x = -1;
 }
@@ -170,6 +170,24 @@ void CEindOpdrDoc::ClearSelections()
 			s->SetIsSelected(false);
 		});
 	}
+}
+
+void CEindOpdrDoc::DeleteSelections()
+{
+	auto remiter = std::remove_if(begin(this->savedShapes), end(this->savedShapes), [&](std::shared_ptr<Shapes::Shape> s) {
+		return s->GetIsSelected();
+	});
+	this->savedShapes.erase(remiter, end(this->savedShapes));
+
+	/*for (int i = 0; i < this->savedShapes.size(); i++)
+		if (this->savedShapes.at(i)->GetIsSelected())
+			this->savedShapes[i].reset();*/
+
+	/*std::remove_if(begin(this->savedShapes), end(this->savedShapes), [&](std::shared_ptr<Shapes::Shape> s){
+		if (s->GetIsSelected())
+			return true;
+		return false;
+	});*/
 }
 
 // CEindOpdrDoc serialization

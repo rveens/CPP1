@@ -45,6 +45,7 @@ BEGIN_MESSAGE_MAP(CEindOpdrView, CView)
 	ON_COMMAND(ID_SHAPE_ELLIPSE, &CEindOpdrView::OnShapeEllipse)
 	ON_COMMAND(ID_SHAPE_POLYGON, &CEindOpdrView::OnShapePolygon)
 	ON_WM_RBUTTONDOWN()
+	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
 // CEindOpdrView construction/destruction
@@ -167,6 +168,7 @@ void CEindOpdrView::OnRButtonDown(UINT nFlags, CPoint point)
 		dialog->DoModal();
 
 		s->SetText(wstring(dialog->GetValue()));
+		s->SetIsSelected(false);
 		this->Invalidate();
 	}
 
@@ -339,4 +341,18 @@ void CEindOpdrView::OnShapePolygon()
 		poligonmode = TRUE;
 		pDoc->SetCurrentDrawShape(std::unique_ptr<Shapes::Shape>(new Shapes::Polygon));
 	}
+}
+
+void CEindOpdrView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// TODO: Add your message handler code here and/or call default
+	CEindOpdrDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	//if (nChar == VK_DELETE)
+	pDoc->DeleteSelections(); // TODO delete items
+	this->Invalidate();
+	CView::OnKeyDown(nChar, nRepCnt, nFlags);
 }
