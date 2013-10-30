@@ -15,16 +15,19 @@ namespace Shapes {
 	{
 	public:
 		Shape();
-		Shape(const Shapes::Shape &ander);
-		Shape &operator=(const Shapes::Shape &ander);
+		//Shape(const Shapes::Shape &ander);
+		//virtual Shape &operator=(const Shapes::Shape &ander);
 		virtual ~Shape(void);
+		virtual std::shared_ptr<Shape> clone() const = 0;
 		virtual void Draw(CDC *pDC) = 0;
+		virtual bool IsOn(CPoint point) const;
+		virtual std::string toString() const;
+
+		/* getters/setters */
 		virtual void SetPoints(vector<CPoint> points);
 		vector<CPoint> GetPoints();
-		virtual std::string toString() const;
-		virtual bool IsOn(CPoint point) const;
-		virtual void SetPen(int nPenStyle, int nWidth, COLORREF crColor);
-		void SetLinePen(int nPenStyle, int nWidth, COLORREF crColor);
+		virtual void SetPen(LOGPEN p);
+		void SetLinePen(LOGPEN p);
 		void SetText(wstring newstring);
 		wstring GetText();
 		void SetIsSelected(bool newselected);
@@ -33,9 +36,9 @@ namespace Shapes {
 		weak_ptr<Shape> GetChild();
 	// values
 	protected:
-		CPen pen;
-		CPen selectionPen;
-		CPen linePen;
+		LOGPEN pen;
+		LOGPEN selectionPen;
+		LOGPEN linePen;
 		wstring text;
 		vector<CPoint> points; // usually 0 for start and 1 for end.
 		weak_ptr<Shape> child; // kind shape in de boom van gelinkte nodes.

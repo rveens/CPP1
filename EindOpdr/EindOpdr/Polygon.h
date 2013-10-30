@@ -16,5 +16,6 @@ namespace Shapes {
 		void SetPoints(vector<CPoint> points);
 		string toString() const;
 		bool IsOn(CPoint point) const;
+		std::shared_ptr<Shape> clone() const;
 	};
 }

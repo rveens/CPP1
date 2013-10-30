@@ -5,15 +5,30 @@
 
 Shapes::Shape::Shape() : text(L""), isSelected(false)
 {
-	pen.CreatePen(PS_DOT, 1, RGB(0,0,255)); // pen used for drag/draw
-	linePen.CreatePen(PS_DASH, 1, RGB(0, 0, 0)); // pen used for lines
-	selectionPen.CreatePen(PS_DASH, 2, RGB(255, 0, 0)); // pen used for selection on click
+	/* pen pen used for drag/draw */
+	pen.lopnStyle = PS_DOT;
+	POINT p;
+	p.x = 1;
+	pen.lopnWidth = p;
+	pen.lopnColor = RGB(0,0,255);
+
+	/* linePen, pen used for lines */
+	linePen.lopnStyle = PS_DASH;
+	linePen.lopnWidth = p;
+	linePen.lopnColor = RGB(0,0,0);
+
+	/* selectionPen, pen used for selection on click */
+	selectionPen.lopnStyle = PS_DASH;
+	p.x = 2;
+	selectionPen.lopnWidth = p;
+	selectionPen.lopnColor = RGB(255,0,0);
 }
 
 // regel van drie (rule of three)
 
 /* 1. Copy constructor, als een object nog niet geinitialiseerd is, zoals bijv Shape s = r; s is nog niet geinitialiseerd, copy constructor wordt aangeroepen. */
-/*Shapes::Shape::Shape(const Shapes::Shape &ander) : pen(ander.pen), start(ander.start), end(ander.end)
+/*Shapes::Shape::Shape(const Shapes::Shape &ander) 
+	: pen(ander.pen), selectionPen(ander.selectionPen), linePen(ander.linePen), points(ander.points), text(ander.text), child(ander.child)
 {
 }*/
 
@@ -21,12 +36,14 @@ Shapes::Shape::Shape() : text(L""), isSelected(false)
 /*Shapes::Shape &Shapes::Shape::operator=(const Shapes::Shape &ander)
 {
 	// belangrijk! gooi oude data weg/reset.
-
 	this->pen = ander.pen;
-	this->start = ander.start;
-	this->end = ander.end;
+	this->selectionPen = ander.selectionPen;
+	this->linePen = ander.linePen;
+	this->points = ander.points;
+	this->text = ander.text;
+	this->child = ander.child;
 
-	return *this; // Geef een referentie terug, geen pointer.
+	return *this; // Geef een referentie (objectwaarde) terug, geen pointer.
 }*/
 
 /* 3. Destructor */
@@ -36,16 +53,14 @@ Shapes::Shape::~Shape(void)
 
 void Shapes::Shape::Draw(CDC *pDC)
 {
+	CPen tp1;
+
 	pDC->SetROP2(R2_NOTXORPEN);
 
 	// Probeer de lijn te tekenen.
-	pDC->SelectObject(&linePen); // speciale lijn pen
+	tp1.CreatePenIndirect(&this->linePen);
+	pDC->SelectObject(&tp1); // speciale lijn pen
 	this->DrawLine(pDC);
-
-	if (this->isSelected) // pak speciale selectie pen
-		pDC->SelectObject(&selectionPen);
-	else // neem de normale pen
-		pDC->SelectObject(&pen);
 }
 
 void Shapes::Shape::DrawLine(CDC *pDC)
@@ -97,16 +112,14 @@ std::string Shapes::Shape::toString() const
 	return ss.str();
 }
 
-void Shapes::Shape::SetPen(int nPenStyle, int nWidth, COLORREF crColor)
+void Shapes::Shape::SetPen(LOGPEN p)
 {
-	this->pen.DeleteObject();
-	this->pen.CreatePen(nPenStyle, nWidth, crColor);
+	this->pen = p;
 }
 
-void Shapes::Shape::SetLinePen(int nPenStyle, int nWidth, COLORREF crColor)
+void Shapes::Shape::SetLinePen(LOGPEN p)
 {
-	this->linePen.DeleteObject();
-	this->linePen.CreatePen(nPenStyle, nWidth, crColor);
+	this->linePen = p;
 }
 
 bool Shapes::Shape::IsOn(CPoint point) const

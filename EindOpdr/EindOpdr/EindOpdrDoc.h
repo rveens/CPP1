@@ -41,6 +41,7 @@ public:
 	void DrawSelection(CDC *pDC, CPoint currentMousePosition);
 	void SetCurrentDrawShape(std::unique_ptr<Shapes::Shape> s);
 	void DrawSavedShapes(CDC *pDC);
+	void DoUndo();
 
 	void AddPolygonPoint(CPoint point);
 	void DrawPolygon(CDC *pDC);
@@ -64,6 +65,7 @@ public:
 
 protected:
 	std::vector<std::shared_ptr<Shapes::Shape>> savedShapes;
+	std::vector<std::shared_ptr<Shapes::Shape>> savedShapesForUndo;
 	std::unique_ptr<Shapes::Shape> selectionDrawShape;
 	CPoint startPoint;
 	CPoint endPoint;

@@ -230,8 +230,22 @@ void CEindOpdrDoc::ChangeShapeColorsSelected()
 {
 	for_each(begin(this->savedShapes), end(this->savedShapes), [&](std::shared_ptr<Shapes::Shape> s){
 		if (s->GetIsSelected()) {
-			s->SetPen(this->shapOutLineStyle, this->shapeOutLineThickness, this->shapeOutLineColor);
-			s->SetLinePen(this->lineStyle, this->lineThickness, this->lineColor);
+			LOGPEN p;
+			POINT pnt;
+
+			pnt.x = this->shapeOutLineThickness;
+			p.lopnStyle = this->shapOutLineStyle;
+			p.lopnWidth = pnt;
+			p.lopnColor = this->shapeOutLineColor;
+
+			s->SetPen(p);
+
+			pnt.x = this->lineThickness;
+			p.lopnStyle = this->lineStyle;
+			p.lopnWidth = pnt;
+			p.lopnColor = this->lineColor;
+
+			s->SetLinePen(p);
 		}
 	});
 }
@@ -239,13 +253,57 @@ void CEindOpdrDoc::ChangeShapeColorsSelected()
 /* private functies */
 void CEindOpdrDoc::saveCurrentDrawShape()
 {
+	// Voor het maken van de actie, slaan we alles op voor de undo.
+	this->savedShapesForUndo.clear();
+	for_each(begin(this->savedShapes), end(this->savedShapes), [&](std::shared_ptr<Shapes::Shape> s){
+		this->savedShapesForUndo.push_back(s->clone());
+	});
+
 	if (this->selectionDrawShape) {
 		/* verander de pen naar de uiteindelijke kleur */
-		selectionDrawShape->SetPen(this->shapOutLineStyle, this->shapeOutLineThickness, this->shapeOutLineColor);
-		selectionDrawShape->SetLinePen(this->lineStyle, this->lineThickness, this->lineColor);
+		LOGPEN p;
+		POINT pnt;
+
+		pnt.x = this->shapeOutLineThickness;
+		p.lopnStyle = this->shapOutLineStyle;
+		p.lopnWidth = pnt;
+		p.lopnColor = this->shapeOutLineColor;
+
+		selectionDrawShape->SetPen(p);
+
+		pnt.x = this->lineThickness;
+		p.lopnStyle = this->lineStyle;
+		p.lopnWidth = pnt;
+		p.lopnColor = this->lineColor;
+		
+		selectionDrawShape->SetLinePen(p);
+
 		savedShapes.push_back(std::move(selectionDrawShape));
 	}
 	/* selectiondraw shape is nu null, omdat move is uitgevoerd. */
+}
+
+void CEindOpdrDoc::DoUndo()
+{
+	// draai de huidige 'state' om met de undo versie.
+	
+	// huidige state tijdelijk opslaan
+	std::vector<std::shared_ptr<Shapes::Shape>> tempVector;
+	for_each(begin(this->savedShapes), end(this->savedShapes), [&](std::shared_ptr<Shapes::Shape> s){
+		tempVector.push_back(s->clone());
+	});
+
+	// undo naar de savedshapes.
+	this->savedShapes.clear();
+	for_each(begin(this->savedShapesForUndo), end(this->savedShapesForUndo), [&](std::shared_ptr<Shapes::Shape> s){
+		this->savedShapes.push_back(s->clone());
+	});
+
+	// temp savedshapes naar de undo
+	this->savedShapesForUndo.clear();
+	for_each(begin(tempVector), end(tempVector), [&](std::shared_ptr<Shapes::Shape> s){
+		savedShapesForUndo.push_back(s->clone());
+	});
 }
 
 // CEindOpdrDoc serialization

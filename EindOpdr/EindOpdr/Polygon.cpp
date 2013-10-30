@@ -14,7 +14,17 @@ Shapes::Polygon::~Polygon(void)
 
 void Shapes::Polygon::Draw(CDC *pDC)
 {
+	CPen tp2, tp3;
 	Shapes::Shape::Draw(pDC);
+
+	if (this->isSelected) { // pak speciale selectie pen
+		tp2.CreatePenIndirect(&this->selectionPen);
+		pDC->SelectObject(&tp2);
+	} else { // neem de normale pen
+		tp3.CreatePenIndirect(&this->pen);
+		pDC->SelectObject(&tp3);
+	}
+
 	if (!points.empty()) {
 		pDC->Polygon(&points[0], points.size());
 
@@ -83,4 +93,9 @@ bool Shapes::Polygon::IsOn(CPoint point) const
 		return true;
 	else
 		return false;
+}
+
+std::shared_ptr<Shapes::Shape> Shapes::Polygon::clone() const
+{
+	return std::shared_ptr<Polygon>(new Polygon(*this)); // copy constructor
 }

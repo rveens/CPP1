@@ -54,6 +54,7 @@ BEGIN_MESSAGE_MAP(CEindOpdrView, CView)
 	ON_COMMAND(ID_LINESIZE_3, &CEindOpdrView::OnLinesize3)
 	ON_COMMAND(ID_LINESTYLE_NORMAL, &CEindOpdrView::OnLinestyleNormal)
 	ON_COMMAND(ID_LINESTYLE_DOTS, &CEindOpdrView::OnLinestyleDots)
+	ON_COMMAND(ID_EDIT_UNDO, &CEindOpdrView::OnEditUndo)
 END_MESSAGE_MAP()
 
 // CEindOpdrView construction/destruction
@@ -510,4 +511,17 @@ void CEindOpdrView::OnLinestyleDots()
 	pDoc->SetOutLineStyle(PS_DOT);
 	pDoc->SetLineStyle(PS_DOT);
 	pDoc->ChangeShapeColorsSelected();
+}
+
+
+void CEindOpdrView::OnEditUndo()
+{
+	// TODO: Add your command handler code here
+	CEindOpdrDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	pDoc->DoUndo();
+	this->Invalidate();
 }

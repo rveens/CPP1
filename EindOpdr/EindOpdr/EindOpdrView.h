@@ -64,6 +64,7 @@ public:
 	afx_msg void OnLinesize3();
 	afx_msg void OnLinestyleNormal();
 	afx_msg void OnLinestyleDots();
+	afx_msg void OnEditUndo();
 };
 
 #ifndef _DEBUG  // debug version in EindOpdrView.cpp

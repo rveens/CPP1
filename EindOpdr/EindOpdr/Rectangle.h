@@ -13,5 +13,6 @@ namespace Shapes {
 		Rectangle();
 		virtual ~Rectangle(void);
 		void Draw(CDC *pDC);
+		std::shared_ptr<Shape> clone() const;
 	};
 }

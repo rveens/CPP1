@@ -10,5 +10,6 @@ namespace Shapes {
 		Ellipse(void);
 		~Ellipse(void);
 		void Draw(CDC *pDC);
+		std::shared_ptr<Shape> clone() const;
 	};
 }

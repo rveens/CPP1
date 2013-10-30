@@ -5,16 +5,25 @@ Shapes::Circle::Circle() : Shape()
 {
 }
 
-
 Shapes::Circle::~Circle(void)
 {
 }
 
 void Shapes::Circle::Draw(CDC *pDC)
 {
+	CPen tp2, tp3;
+
 	Shapes::Shape::Draw(pDC);
 	if (points.empty())
 		return;
+
+	if (this->isSelected) { // pak speciale selectie pen
+		tp2.CreatePenIndirect(&this->selectionPen);
+		pDC->SelectObject(&tp2);
+	} else { // neem de normale pen
+		tp3.CreatePenIndirect(&this->pen);
+		pDC->SelectObject(&tp3);
+	}
 
 	pDC->Ellipse(points[0].x, points[0].y, points[1].x, points[1].y);
 
@@ -33,4 +42,9 @@ void Shapes::Circle::SetPoints(vector<CPoint> points)
 		this->end.y = (end.x - start.x) + start.y;
 		this->end.x = end.x;
 	*/
+}
+
+std::shared_ptr<Shapes::Shape> Shapes::Circle::clone() const
+{
+	return std::shared_ptr<Circle>(new Circle(*this)); // copy constructor
 }
