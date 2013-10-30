@@ -28,11 +28,17 @@
 #define ID_LINESTYLE_NORMAL             32786
 #define ID_LINESTYLE_DOTS               32787
 #define ID_BUTTON32788                  32788
+#define ID_TBUTTON_SQUARE               32788
 #define ID_BUTTON32789                  32789
+#define ID_TBUTTON_RECTANGLE            32789
 #define ID_BUTTON32790                  32790
+#define ID_TBUTTON_CIRCLE               32790
 #define ID_BUTTON32791                  32791
+#define ID_TBUTTON_ELLIPSE              32791
 #define ID_BUTTON32792                  32792
+#define ID_TBUTTON_POLYGON              32792
 #define ID_BUTTON32793                  32793
+#define ID_TBUTTON_LINE                 32793
 
 // Next default values for new objects
 // 

@@ -23,6 +23,15 @@ private:
 // Operations
 public:
 
+private:
+	void SetCircle();
+	void SetEllipse();
+	void SetPolygon();
+	void SetRectangle();
+	void SetSquare();
+	void SetLine();
+	void ResetChosenShapeExceptPolygon(); // clears the chosen shape to draw (menu vinkjes etc)
+
 // Overrides
 public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
@@ -65,6 +74,12 @@ public:
 	afx_msg void OnLinestyleNormal();
 	afx_msg void OnLinestyleDots();
 	afx_msg void OnEditUndo();
+	afx_msg void OnToolBarButtonCircle();
+	afx_msg void OnToolBarButtonEllipse();
+	afx_msg void OnToolBarButtonSquare();
+	afx_msg void OnToolBarButtonRectangle();
+	afx_msg void OnToolBarButtonPolygon();
+	afx_msg void OnToolBarButtonLine();
 //	afx_msg void OnMouseLeave();
 };
 
