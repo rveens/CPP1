@@ -19,6 +19,7 @@ public:
 	CEindOpdrDoc* GetDocument() const;
 private:
 	viewmode::viewmode viewmode;
+	CToolBar toolbar;
 
 // Operations
 public:

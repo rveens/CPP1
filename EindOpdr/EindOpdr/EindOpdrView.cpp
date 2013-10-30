@@ -64,16 +64,19 @@ CEindOpdrView::CEindOpdrView()
 {
 	// TODO: add construction code here
 	this->viewmode = viewmode::NORMAL;
+	
 }
 
 CEindOpdrView::~CEindOpdrView()
 {
+	
 }
 
 BOOL CEindOpdrView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: Modify the Window class or styles here by modifying
 	//  the CREATESTRUCT cs
+
 
 	return CView::PreCreateWindow(cs);
 }

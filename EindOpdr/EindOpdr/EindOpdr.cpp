@@ -175,6 +175,3 @@ void CEindOpdrApp::OnAppAbout()
 }
 
 // CEindOpdrApp message handlers
-
-
-
