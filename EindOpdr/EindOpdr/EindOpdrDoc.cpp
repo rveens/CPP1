@@ -295,6 +295,15 @@ void CEindOpdrDoc::DoUndo()
 		tempVector.push_back(s->clone());
 	});
 
+	// TODO referenties van lijnen fixen.
+	/*
+	ga door de originele lijst heen,
+	als de shape hij een kind heeft,
+		-> zoek het id van het kind
+		-> zoek de positie van het kind
+		-> maak een referentie in de nieuwe array van het shape (kopie, zelfde pos) naar het kind (kopie)
+	*/
+
 	// undo naar de savedshapes.
 	this->savedShapes.clear();
 	for_each(begin(this->savedShapesForUndo), end(this->savedShapesForUndo), [&](std::shared_ptr<Shapes::Shape> s){
