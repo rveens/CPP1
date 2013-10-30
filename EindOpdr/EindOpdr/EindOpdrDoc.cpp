@@ -11,6 +11,7 @@
 
 #include "EindOpdrDoc.h"
 #include "Polygon.h"
+#include "Shape.h"
 #include <fstream>
 #include <string>
 #include <algorithm>
@@ -348,7 +349,7 @@ BOOL CEindOpdrDoc::OnSaveDocument(LPCTSTR lpszPathName)
 
 	std::ofstream ofs (s_wstr, std::ofstream::out);
 	if (ofs) {
-		ofs << this->selectionDrawShape->toString();
+		ofs << *this->selectionDrawShape;
 		ofs.close();
 		return TRUE;
 	} else

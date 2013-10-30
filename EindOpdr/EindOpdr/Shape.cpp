@@ -173,3 +173,15 @@ void Shapes::Shape::SetID(unsigned int newID)
 {
 	this->id = newID;
 }
+
+ostream &Shapes::Shape::print(ostream &o) const
+{
+	o << "Dit is een test.";
+
+	return o;
+}
+
+istream &Shapes::Shape::read(istream &is) const
+{
+	return is;
+}

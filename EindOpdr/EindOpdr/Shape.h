@@ -9,10 +9,13 @@
 using std::vector;
 using std::weak_ptr;
 using std::wstring;
+using std::ostream;
+using std::istream;
 
 namespace Shapes {
 	class Shape
 	{
+	// functions
 	public:
 		Shape(int id = -1);
 		//Shape(const Shapes::Shape &ander);
@@ -23,6 +26,10 @@ namespace Shapes {
 		virtual bool IsOn(CPoint point) const;
 		virtual std::string toString() const;
 
+		/* virtuele friend operator idoom */
+		friend ostream &operator<<(ostream &os, const Shape &s);
+		friend istream &operator>>(istream &is, const Shape &s);
+		
 		/* getters/setters */
 		virtual void SetPoints(vector<CPoint> points);
 		vector<CPoint> GetPoints();
@@ -36,6 +43,12 @@ namespace Shapes {
 		weak_ptr<Shape> GetChild();
 		unsigned int GetID();
 		void SetID(unsigned int newID);
+
+	protected:
+		virtual ostream &print(ostream &o) const;
+		virtual istream &read(istream &is) const;
+		virtual void DrawLine(CDC *pDC);
+
 	// values
 	protected:
 		unsigned int id;
@@ -46,9 +59,19 @@ namespace Shapes {
 		vector<CPoint> points; // usually 0 for start and 1 for end.
 		weak_ptr<Shape> child; // kind shape in de boom van gelinkte nodes.
 		bool isSelected;
-	// functions
-	protected:
-		virtual void DrawLine(CDC *pDC);
 	};
+	
+	/* operator<< en operator>> zijn niet virtueel omdat het friend functions zijn! 
+	daarom roepen we een functie van Shape aan die het werkt doet, en virtueel is. */
+	inline ostream &operator<<(ostream &o, const Shapes::Shape &s)
+	{
+		s.print(o); // delegate the work to a polymorphic member function.
+		return o;
+	}
 
+	inline istream &operator>>(istream &is, const Shapes::Shape &s)
+	{
+		s.read(is); // delegate the work to a polymorphic member function.
+		return is;
+	}
 }
