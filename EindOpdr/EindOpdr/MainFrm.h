@@ -14,6 +14,9 @@ protected: // create from serialization only
 // Attributes
 public:
 
+private:
+	CToolBar toolbar;
+
 // Operations
 public:
 

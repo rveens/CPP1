@@ -67,6 +67,20 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	DockControlBar(&m_wndToolBar);
 
 
+	// mijn toolbar!
+
+	 if (!toolbar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP
+          | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC))
+      {
+            MessageBox(L"Failed to create toolbar\n");
+            return -1; // fail to create
+      }
+
+     toolbar.LoadToolBar(IDR_TOOLBAR1);
+     toolbar.EnableDocking(CBRS_ALIGN_ANY);
+     EnableDocking(CBRS_ALIGN_ANY);
+     DockControlBar(&toolbar);
+
 	return 0;
 }
 
