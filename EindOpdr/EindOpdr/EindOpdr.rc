@@ -111,6 +111,17 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Shape Color",                 ID_SHAPE_SHAPECOLOR
         MENUITEM "Line Color",                  ID_SHAPE_LINECOLOR
+        POPUP "Line Size"
+        BEGIN
+            MENUITEM "1",                           ID_LINESIZE_1
+            MENUITEM "2",                           ID_LINESIZE_2
+            MENUITEM "3",                           ID_LINESIZE_3
+        END
+        POPUP "Line Style"
+        BEGIN
+            MENUITEM "Normal",                      ID_LINESTYLE_NORMAL
+            MENUITEM "Dots",                        ID_LINESTYLE_DOTS
+        END
     END
 END
 

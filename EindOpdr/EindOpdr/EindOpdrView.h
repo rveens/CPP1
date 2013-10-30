@@ -59,6 +59,11 @@ public:
 	afx_msg void OnShapeLine();
 	afx_msg void OnShapeShapecolor();
 	afx_msg void OnShapeLinecolor();
+	afx_msg void OnLinesize1();
+	afx_msg void OnLinesize2();
+	afx_msg void OnLinesize3();
+	afx_msg void OnLinestyleNormal();
+	afx_msg void OnLinestyleDots();
 };
 
 #ifndef _DEBUG  // debug version in EindOpdrView.cpp

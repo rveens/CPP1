@@ -49,6 +49,11 @@ BEGIN_MESSAGE_MAP(CEindOpdrView, CView)
 	ON_COMMAND(ID_SHAPE_LINE, &CEindOpdrView::OnShapeLine)
 	ON_COMMAND(ID_SHAPE_SHAPECOLOR, &CEindOpdrView::OnShapeShapecolor)
 	ON_COMMAND(ID_SHAPE_LINECOLOR, &CEindOpdrView::OnShapeLinecolor)
+	ON_COMMAND(ID_LINESIZE_1, &CEindOpdrView::OnLinesize1)
+	ON_COMMAND(ID_LINESIZE_2, &CEindOpdrView::OnLinesize2)
+	ON_COMMAND(ID_LINESIZE_3, &CEindOpdrView::OnLinesize3)
+	ON_COMMAND(ID_LINESTYLE_NORMAL, &CEindOpdrView::OnLinestyleNormal)
+	ON_COMMAND(ID_LINESTYLE_DOTS, &CEindOpdrView::OnLinestyleDots)
 END_MESSAGE_MAP()
 
 // CEindOpdrView construction/destruction
@@ -436,4 +441,73 @@ void CEindOpdrView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		this->Invalidate();
 	}
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);
+}
+
+void CEindOpdrView::OnLinesize1()
+{
+	// TODO: Add your command handler code here
+	CEindOpdrDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	pDoc->SetOutLineThinkness(1);
+	pDoc->SetLineThickness(1);
+	pDoc->ChangeShapeColorsSelected();
+}
+
+
+void CEindOpdrView::OnLinesize2()
+{
+	// TODO: Add your command handler code here
+	CEindOpdrDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	pDoc->SetOutLineThinkness(2);
+	pDoc->SetLineThickness(2);
+	pDoc->ChangeShapeColorsSelected();
+}
+
+
+void CEindOpdrView::OnLinesize3()
+{
+	// TODO: Add your command handler code here
+	CEindOpdrDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	pDoc->SetOutLineThinkness(3);
+	pDoc->SetLineThickness(3);
+	pDoc->ChangeShapeColorsSelected();
+}
+
+
+void CEindOpdrView::OnLinestyleNormal()
+{
+	// TODO: Add your command handler code here
+	CEindOpdrDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	pDoc->SetOutLineStyle(PS_SOLID);
+	pDoc->SetLineStyle(PS_SOLID);
+	pDoc->ChangeShapeColorsSelected();
+}
+
+
+void CEindOpdrView::OnLinestyleDots()
+{
+	// TODO: Add your command handler code here
+	CEindOpdrDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	pDoc->SetOutLineStyle(PS_DOT);
+	pDoc->SetLineStyle(PS_DOT);
+	pDoc->ChangeShapeColorsSelected();
 }

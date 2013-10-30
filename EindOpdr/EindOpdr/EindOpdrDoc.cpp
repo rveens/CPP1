@@ -201,19 +201,29 @@ void CEindOpdrDoc::SetShapeOutLineColor(COLORREF c)
 	this->shapeOutLineColor = c;
 }
 
-COLORREF CEindOpdrDoc::GetShapeOutLineColor()
-{
-	return this->shapeOutLineColor;
-}
-
 void CEindOpdrDoc::SetLineColor(COLORREF c)
 {
 	this->lineColor = c;
 }
 
-COLORREF CEindOpdrDoc::GetLineColor()
+void CEindOpdrDoc::SetOutLineThinkness(int thinkness)
 {
-	return this->lineColor;
+	this->shapeOutLineThickness = thinkness;
+}
+
+void CEindOpdrDoc::SetLineThickness(int thinkness)
+{
+	this->lineThickness = thinkness;
+}
+
+void CEindOpdrDoc::SetOutLineStyle(int style)
+{
+	this->shapOutLineStyle = style;
+}
+
+void CEindOpdrDoc::SetLineStyle(int style)
+{
+	this->lineStyle = style;
 }
 
 void CEindOpdrDoc::ChangeShapeColorsSelected()

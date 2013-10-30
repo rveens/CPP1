@@ -50,9 +50,11 @@ public:
 	bool TryLine(CPoint p);
 	void ClearLineTemp();
 	void SetShapeOutLineColor(COLORREF c);
-	COLORREF GetShapeOutLineColor();
 	void SetLineColor(COLORREF c);
-	COLORREF GetLineColor();
+	void SetOutLineThinkness(int thinkness);
+	void SetLineThickness(int thinkness);
+	void SetOutLineStyle(int style);
+	void SetLineStyle(int style);
 	void ChangeShapeColorsSelected();
 	void saveCurrentDrawShape();
 #ifdef _DEBUG
