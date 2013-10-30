@@ -55,6 +55,7 @@ BEGIN_MESSAGE_MAP(CEindOpdrView, CView)
 	ON_COMMAND(ID_LINESTYLE_NORMAL, &CEindOpdrView::OnLinestyleNormal)
 	ON_COMMAND(ID_LINESTYLE_DOTS, &CEindOpdrView::OnLinestyleDots)
 	ON_COMMAND(ID_EDIT_UNDO, &CEindOpdrView::OnEditUndo)
+//	ON_WM_MOUSELEAVE()
 END_MESSAGE_MAP()
 
 // CEindOpdrView construction/destruction
@@ -208,7 +209,7 @@ void CEindOpdrView::OnLButtonUp(UINT nFlags, CPoint point)
 	if (this->viewmode == viewmode::POLYGON)
 		; // niets
 	else if (this->viewmode == viewmode::NORMAL)
-		pDoc->StopSelection(point);
+		pDoc->StopSelection();
 
 	this->Invalidate();
 
@@ -234,11 +235,25 @@ void CEindOpdrView::OnMouseMove(UINT nFlags, CPoint point)
 
 	CDC *pDC = GetDC();
 
-	if (GetKeyState(VK_LBUTTON) & 0x80) {
-		if (this->viewmode == viewmode::POLYGON)
-			; // niets
-		else
-			pDoc->DrawSelection(pDC, point);
+	SetCapture();               //  Capture the mouse input
+	CRect wndRect;
+	GetWindowRect(&wndRect);
+	ScreenToClient(&wndRect);
+
+	if (wndRect.PtInRect(point))	
+	{
+		if (GetKeyState(VK_LBUTTON) & 0x80) {
+			if (this->viewmode == viewmode::POLYGON)
+				; // niets
+			else
+				pDoc->DrawSelection(pDC, point);
+		}
+	} else {
+		if (GetKeyState(VK_LBUTTON) & 0x80) {
+			pDoc->StopSelection();
+			this->Invalidate();
+		}
+		ReleaseCapture();
 	}
 
 	ReleaseDC(pDC);

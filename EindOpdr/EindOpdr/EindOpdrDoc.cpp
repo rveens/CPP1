@@ -74,7 +74,7 @@ void CEindOpdrDoc::StartSelection(CPoint startpoint)
 	this->startPoint = startpoint;
 }
 
-void CEindOpdrDoc::StopSelection(CPoint endpoint)
+void CEindOpdrDoc::StopSelection()
 {
 	/* sla de huidige op in de savedShapes lijst. */
 	saveCurrentDrawShape();

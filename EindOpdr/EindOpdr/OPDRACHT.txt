@@ -31,7 +31,7 @@ x Er is een undo-functie (ctrl-z)
 x Je kunt objecten selecteren met een klik. Maak een methode virtual bool Shape::IsOn(CPoint point) const;
 x Je kunt geselecteerde objecten verwijderen
 x Als nodig wordt alles opnieuw getekend (bijvoorbeeld na minimize-maximize)
-- Zorg voor logisch gedrag als de muisaanwijzer tijdens slepen het venster verlaat en dan al dan niet wordt losgelaten
+x Zorg voor logisch gedrag als de muisaanwijzer tijdens slepen het venster verlaat en dan al dan niet wordt losgelaten
 - Voeg een toolbar toe
 
 Extra functies (voor extra punten)

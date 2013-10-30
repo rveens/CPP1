@@ -37,7 +37,7 @@ public:
 public:
 	virtual ~CEindOpdrDoc();
 	void StartSelection(CPoint startpoint);
-	void StopSelection(CPoint endpoint);
+	void StopSelection();
 	void DrawSelection(CDC *pDC, CPoint currentMousePosition);
 	void SetCurrentDrawShape(std::unique_ptr<Shapes::Shape> s);
 	void DrawSavedShapes(CDC *pDC);
