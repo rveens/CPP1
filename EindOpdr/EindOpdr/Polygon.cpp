@@ -4,7 +4,7 @@
 
 using std::for_each;
 
-Shapes::Polygon::Polygon(void)
+Shapes::Polygon::Polygon(int id) : Shape(id)
 {
 }
 

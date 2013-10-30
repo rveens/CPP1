@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Circle.h"
 
-Shapes::Circle::Circle() : Shape()
+Shapes::Circle::Circle(int id) : Shape(id)
 {
 }
 

@@ -10,7 +10,7 @@ namespace Shapes {
 		public Shape
 	{
 	public:
-		Rectangle();
+		Rectangle(int id = -1);
 		virtual ~Rectangle(void);
 		void Draw(CDC *pDC);
 		std::shared_ptr<Shape> clone() const;

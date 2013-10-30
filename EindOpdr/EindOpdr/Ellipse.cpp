@@ -2,7 +2,7 @@
 #include "Ellipse.h"
 
 
-Shapes::Ellipse::Ellipse(void)
+Shapes::Ellipse::Ellipse(int id) : Shape(id)
 {
 }
 

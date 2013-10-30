@@ -14,7 +14,7 @@ namespace Shapes {
 	class Shape
 	{
 	public:
-		Shape();
+		Shape(int id = -1);
 		//Shape(const Shapes::Shape &ander);
 		//virtual Shape &operator=(const Shapes::Shape &ander);
 		virtual ~Shape(void);
@@ -34,8 +34,11 @@ namespace Shapes {
 		bool GetIsSelected();
 		void SetChild(weak_ptr<Shape> s);
 		weak_ptr<Shape> GetChild();
+		unsigned int GetID();
+		void SetID(unsigned int newID);
 	// values
 	protected:
+		unsigned int id;
 		LOGPEN pen;
 		LOGPEN selectionPen;
 		LOGPEN linePen;

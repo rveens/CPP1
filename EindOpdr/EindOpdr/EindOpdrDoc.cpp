@@ -36,7 +36,7 @@ END_MESSAGE_MAP()
 // CEindOpdrDoc construction/destruction
 
 CEindOpdrDoc::CEindOpdrDoc() : shapeOutLineColor(RGB(0, 0, 0)), shapOutLineStyle(PS_COSMETIC), shapeOutLineThickness(1),
-	lineColor(RGB(0, 0, 0)), lineStyle(PS_DASH), lineThickness(1)
+	lineColor(RGB(0, 0, 0)), lineStyle(PS_DASH), lineThickness(1), idCounter(0)
 {
 	// TODO: add one-time construction code here
 	savedShapes = std::vector<std::shared_ptr<Shapes::Shape>>();
@@ -278,6 +278,8 @@ void CEindOpdrDoc::saveCurrentDrawShape()
 		
 		selectionDrawShape->SetLinePen(p);
 
+		// Stel het id in!
+		selectionDrawShape->SetID(this->idCounter++);
 		savedShapes.push_back(std::move(selectionDrawShape));
 	}
 	/* selectiondraw shape is nu null, omdat move is uitgevoerd. */

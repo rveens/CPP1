@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Rectangle.h"
 
-Shapes::Rectangle::Rectangle() : Shape()
+Shapes::Rectangle::Rectangle(int id) : Shape(id)
 {
 }
 

@@ -6,7 +6,7 @@ namespace Shapes {
 		public Shapes::Shape
 	{
 	public:
-		Square(void);
+		Square(int id = -1);
 		~Square(void);
 		void Draw(CDC *pDC);
 		void SetPoints(vector<CPoint> points);

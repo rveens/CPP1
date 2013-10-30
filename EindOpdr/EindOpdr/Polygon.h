@@ -10,7 +10,7 @@ namespace Shapes {
 		public Shape
 	{
 	public:
-		Polygon(void);
+		Polygon(int id = -1);
 		~Polygon(void);
 		void Draw(CDC *pDC);
 		void SetPoints(vector<CPoint> points);

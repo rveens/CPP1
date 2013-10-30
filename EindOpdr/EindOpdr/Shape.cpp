@@ -3,7 +3,7 @@
 #include <sstream>
 
 
-Shapes::Shape::Shape() : text(L""), isSelected(false)
+Shapes::Shape::Shape(int id) : id(id), text(L""), isSelected(false)
 {
 	/* pen pen used for drag/draw */
 	pen.lopnStyle = PS_DOT;
@@ -162,4 +162,14 @@ void Shapes::Shape::SetChild(weak_ptr<Shapes::Shape> s)
 weak_ptr<Shapes::Shape> Shapes::Shape::GetChild()
 {
 	return this->child;
+}
+
+unsigned int Shapes::Shape::GetID()
+{
+	return this->id;
+}
+
+void Shapes::Shape::SetID(unsigned int newID)
+{
+	this->id = newID;
 }

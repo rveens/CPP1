@@ -79,6 +79,7 @@ protected:
 	COLORREF lineColor;
 	int lineStyle;
 	int lineThickness;
+	unsigned int idCounter;
 
 // Generated message map functions
 protected:

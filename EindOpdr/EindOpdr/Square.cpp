@@ -2,7 +2,7 @@
 #include "Square.h"
 
 
-Shapes::Square::Square(void)
+Shapes::Square::Square(int id) : Shape(id)
 {
 }
 
