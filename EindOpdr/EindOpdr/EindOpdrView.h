@@ -21,6 +21,8 @@ private:
 	viewmode::viewmode viewmode;
 	bool setDrag;
 	CPoint lastDragPoint;
+	CFont fntTitle1;
+	CFont fntTitle2;
 
 // Operations
 public:

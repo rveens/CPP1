@@ -36,7 +36,7 @@ x Voeg een toolbar toe
 
 Extra functies (voor extra punten)
 - Lijnkleur en opvulkleur kunnnen per vorm of verbindingslijn worden ingesteld
-- Je kunt geselecteerde objecten verplaatsen (verbindingslijnen gaan dan mee)
+x Je kunt geselecteerde objecten verplaatsen (verbindingslijnen gaan dan mee)
 x Je kunt kleur en stijl van geselecteerde objecten wijzigen
 - Je kunt de tekening afdrukken op een printer
 - Je kunt vormen groeperen en loskoppelen

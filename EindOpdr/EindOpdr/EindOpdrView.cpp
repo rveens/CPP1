@@ -19,6 +19,7 @@
 #include "InputTextDialog.h"
 
 #include <memory>
+#include <algorithm>
 
 using std::unique_ptr;
 
@@ -113,7 +114,7 @@ BOOL CEindOpdrView::OnPreparePrinting(CPrintInfo* pInfo)
 	return DoPreparePrinting(pInfo);
 }
 
-void CEindOpdrView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+void CEindOpdrView::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 {
 	// TODO: add extra initialization before printing
 }
