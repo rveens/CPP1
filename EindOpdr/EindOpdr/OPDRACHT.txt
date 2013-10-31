@@ -60,7 +60,7 @@ Succes
 
 
 Voor 10:
-- Opvulkleur
+x Opvulkleur
 - Lijnen trekken
 x Undo stack
 - Print tekst size (opblazen)

@@ -41,6 +41,7 @@ namespace Shapes {
 		wstring GetText();
 		void SetIsSelected(bool newselected);
 		bool GetIsSelected();
+		int GetChildIDTemp();
 		void SetChild(weak_ptr<Shape> s);
 		weak_ptr<Shape> GetChild();
 		unsigned int GetID();
@@ -54,6 +55,7 @@ namespace Shapes {
 	// values
 	protected:
 		int id;
+		int childidtemp;
 		LOGPEN pen;
 		LOGPEN selectionPen;
 		LOGPEN linePen;

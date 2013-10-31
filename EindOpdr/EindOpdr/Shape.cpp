@@ -4,7 +4,7 @@
 #include <algorithm>
 
 
-Shapes::Shape::Shape(int id) : id(id), text(L""), isSelected(false)
+Shapes::Shape::Shape(int id) : id(id), text(L""), isSelected(false), childidtemp(-1)
 {
 	/* pen pen used for drag/draw */
 	pen.lopnStyle = PS_DOT;
@@ -198,6 +198,11 @@ void Shapes::Shape::MoveShape(CPoint p)
 	}
 }
 
+int Shapes::Shape::GetChildIDTemp()
+{
+	return this->childidtemp;
+}
+
 ostream &Shapes::Shape::print(ostream &o) const
 {
 	// pak de child id;
@@ -275,7 +280,7 @@ istream &Shapes::Shape::read(istream &is)
 		}
 	}
 
-	is >> s; // TODO childid
+	is >> childidtemp; // TODO childid
 	is >> isSelected;
 
 	// penStyle penWidth penColor

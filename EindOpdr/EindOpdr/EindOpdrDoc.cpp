@@ -390,6 +390,25 @@ BOOL CEindOpdrDoc::OnOpenDocument(LPCTSTR lpszPathName)
 				this->savedShapes.push_back(pShape);
 			}
 		}
+		// Pointers fixen
+		/*
+		ga door de originele lijst heen,
+		als de shape hij een kind heeft,
+			-> zoek het id van het kind
+			-> zoek de positie van het kind
+			-> maak een referentie in de nieuwe array van het shape (kopie, zelfde pos) naar het kind (kopie)
+		*/
+		std::for_each(begin(this->savedShapes), end(this->savedShapes), [&](std::shared_ptr<Shapes::Shape> s){ 
+			// s->child = ...
+			std::find_if(begin(this->savedShapes), end(this->savedShapes), [&](std::shared_ptr<Shapes::Shape> cs) {
+				if (s->GetChildIDTemp() == cs->GetID()) {
+					s->SetChild(cs);
+					return true;
+				} else
+					return false;
+			});
+		});
+
 		ifs.close();
 		return TRUE;
 	} else
@@ -405,9 +424,9 @@ BOOL CEindOpdrDoc::OnSaveDocument(LPCTSTR lpszPathName)
 
 	std::ofstream ofs (s_wstr, std::ofstream::out);
 	if (ofs) {
-		ofs << "\xEF\xBB\xBF"; // UTF-8 BOM
 		for (auto s : this->savedShapes)
 			ofs << *s;
+		ofs << "\xEF\xBB\xBF"; // UTF-8 BOM
 		ofs.close();
 		return TRUE;
 	} else
