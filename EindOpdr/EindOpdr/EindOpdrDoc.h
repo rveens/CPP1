@@ -58,6 +58,7 @@ public:
 	void SetLineStyle(int style);
 	void ChangeShapeColorsSelected();
 	void saveCurrentDrawShape();
+	void MoveSelectedShapes(CPoint p);
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;

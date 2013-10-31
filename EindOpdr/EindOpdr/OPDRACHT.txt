@@ -13,7 +13,7 @@ x Met klikken en slepen kun je de gekozen vorm tekenen.
 x Maak een abstracte klasse Shape, die zichzelf kan tekenen. Circle en Rectangle zijn derived.
 x Hou een lijst met getekende Shapes bij
 x Shape kan zichzelf ook als tekst naar een stream schrijven en er van lezen
-- Je kunt je tekening daarmee opslaan in een bestand en weer inlezen
+x Je kunt je tekening daarmee opslaan in een bestand en weer inlezen
 
 Nieuwe eisen aan het tekenprogramma
 

@@ -164,6 +164,27 @@ void Shapes::Shape::SetID(unsigned int newID)
 	this->id = newID;
 }
 
+void Shapes::Shape::MoveShape(CPoint p)
+{
+	int xOffSet, yOffSet;
+
+	if (!points.empty()) {
+		xOffSet = p.x - this->points[0].x;
+		yOffSet = p.y - this->points[0].y;
+
+		for( CPoint &po : this->points) {
+			po.x += xOffSet;
+			po.y += yOffSet;
+		}
+		
+		/*
+		std::for_each(begin(points), end(points), [&](CPoint point) {
+			point.x = point.x + xOffSet;
+			point.y = point.y + yOffSet;
+		})*/;
+	}
+}
+
 ostream &Shapes::Shape::print(ostream &o) const
 {
 	// pak de child id;

@@ -19,6 +19,8 @@ public:
 	CEindOpdrDoc* GetDocument() const;
 private:
 	viewmode::viewmode viewmode;
+	bool setDrag;
+	CPoint lastDragPoint;
 
 // Operations
 public:

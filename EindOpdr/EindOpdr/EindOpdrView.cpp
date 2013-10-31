@@ -70,7 +70,7 @@ CEindOpdrView::CEindOpdrView()
 {
 	// TODO: add construction code here
 	this->viewmode = viewmode::NORMAL;
-	
+	setDrag = false;
 }
 
 CEindOpdrView::~CEindOpdrView()
@@ -309,11 +309,15 @@ void CEindOpdrView::OnLButtonDown(UINT nFlags, CPoint point)
 	if (!pDoc)
 		return;
 
+		
 	/* probeer de selectie weg te gooien als er geen object wordt aangeklikt. */
 	auto sp = pDoc->TrySelection(point);
 	if (!sp.lock()) { // we krijgen geen lock? dan hebben we niks kunnen vinden op de positie
 		pDoc->ClearSelections(); // gooi selecties weg,
 		pDoc->ClearLineTemp(); // en clear de linetemp.
+	} else {
+		setDrag = true;
+		lastDragPoint = point;
 	}
 
 	if (this->viewmode == viewmode::POLYGON) {
@@ -366,6 +370,11 @@ void CEindOpdrView::OnLButtonUp(UINT nFlags, CPoint point)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
+
+	if (setDrag && point != this->lastDragPoint) {
+		pDoc->MoveSelectedShapes(point);
+		setDrag = false;
+	}
 
 	if (this->viewmode == viewmode::POLYGON)
 		; // niets
