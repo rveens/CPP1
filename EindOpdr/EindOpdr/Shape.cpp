@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Shape.h"
 #include <sstream>
+#include <algorithm>
 
 
 Shapes::Shape::Shape(int id) : id(id), text(L""), isSelected(false)
@@ -176,12 +177,72 @@ void Shapes::Shape::SetID(unsigned int newID)
 
 ostream &Shapes::Shape::print(ostream &o) const
 {
-	o << "Dit is een test.";
+	// pak de child id;
+	int childid = -1;
+	auto sp = child.lock();
+	if (sp)
+		childid = sp->GetID();
+
+	std::string textstring(text.begin(), text.end());
+
+	// class name
+	std::string classnamefull(typeid(*this).name());
+	std::string classname = classnamefull.substr(classnamefull.find("::")+2, classnamefull.size()-1);
+
+	// RECT + ' id text points[0].x points[0].y points[1].x points[1].y childid isselected'
+	o << classname << " " << id << " " << textstring << " STRINGEND ";
+
+	// punten er in stoppen
+	std::for_each(begin(points), end(points), [&](CPoint p) {
+		o << p.x << " ";
+		o << p.y << " ";
+	});
+	o << "POINTSEND " << childid << " " << isSelected << " " << std::endl;
 
 	return o;
 }
 
-istream &Shapes::Shape::read(istream &is) const
+istream &Shapes::Shape::read(istream &is)
 {
+	// points clearen
+	this->points.clear();
+
+	// string
+	std::string s;
+
+	is >> id;
+
+	/* string pakken*/
+	is >> s;
+	if (s != "STRINGEND") {
+		text = wstring(s.begin(), s.end());
+		is >> s; // STRINGEND weghalen
+	}
+
+	// blijf punten in laden totdat we POINTSEND tegenkomen
+	int x, y;
+	bool toggle = true, makePoint = false;
+	while (s != "POINTSEND") {
+		is >> s;
+		if (s == "POINTSEND")
+			break;
+		if (toggle) {
+			x = std::stoi(s);
+			toggle = false;
+		} else {
+			y = std::stoi(s);
+			makePoint = true;
+			toggle = true;
+		}
+
+		if (makePoint) {
+			points.push_back(CPoint(x, y));
+			makePoint = false;
+		}
+	}
+
+	is >> s; // TODO childid
+	is >> isSelected;
+
 	return is;
 }

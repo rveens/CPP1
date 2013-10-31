@@ -28,7 +28,7 @@ namespace Shapes {
 
 		/* virtuele friend operator idoom */
 		friend ostream &operator<<(ostream &os, const Shape &s);
-		friend istream &operator>>(istream &is, const Shape &s);
+		friend istream &operator>>(istream &is, Shape &s);
 		
 		/* getters/setters */
 		virtual void SetPoints(vector<CPoint> points);
@@ -46,12 +46,12 @@ namespace Shapes {
 
 	protected:
 		virtual ostream &print(ostream &o) const;
-		virtual istream &read(istream &is) const;
+		virtual istream &read(istream &is);
 		virtual void DrawLine(CDC *pDC);
 
 	// values
 	protected:
-		unsigned int id;
+		int id;
 		LOGPEN pen;
 		LOGPEN selectionPen;
 		LOGPEN linePen;
@@ -69,7 +69,7 @@ namespace Shapes {
 		return o;
 	}
 
-	inline istream &operator>>(istream &is, const Shapes::Shape &s)
+	inline istream &operator>>(istream &is, Shapes::Shape &s)
 	{
 		s.read(is); // delegate the work to a polymorphic member function.
 		return is;

@@ -12,6 +12,9 @@
 #include "EindOpdrDoc.h"
 #include "Polygon.h"
 #include "Shape.h"
+#include "Circle.h"
+#include "Ellipse.h"
+#include "Square.h"
 #include <fstream>
 #include <string>
 #include <algorithm>
@@ -57,6 +60,8 @@ BOOL CEindOpdrDoc::OnNewDocument()
 
 	// TODO: add reinitialization code here
 	// (SDI documents will reuse this document)
+	this->savedShapes.clear();
+	this->savedShapesForUndo.clear();
 
 	return TRUE;
 }
@@ -333,7 +338,37 @@ BOOL CEindOpdrDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	std::wstring s_wstr(lpszPathName);
 	std::ifstream ifs (s_wstr, std::ifstream::in);
 	if (ifs) {
-		//ifs >> ...;
+		// huidige weg keilen
+		this->savedShapesForUndo.clear();
+		this->savedShapes.clear();
+
+		// inladen
+		while (!ifs.eof()) {
+			std::string token;
+			if (!(ifs >> token)) { /* error */ return FALSE; }
+			// mheh eigenlijk vies
+			if (token == "Circle") {
+				auto pShape = std::make_shared<Shapes::Circle>();
+				ifs >> *pShape;
+				this->savedShapes.push_back(pShape);
+			} else if (token == "Ellipse") {
+				auto pShape = std::make_shared<Shapes::Ellipse>();
+				ifs >> *pShape;
+				this->savedShapes.push_back(pShape);
+			} else if (token == "Rectangle") {
+				auto pShape = std::make_shared<Shapes::Rectangle>();
+				ifs >> *pShape;
+				this->savedShapes.push_back(pShape);
+			} else if (token == "Square") {
+				auto pShape = std::make_shared<Shapes::Square>();
+				ifs >> *pShape;
+				this->savedShapes.push_back(pShape);
+			} else if (token == "Polygon") {
+				auto pShape = std::make_shared<Shapes::Polygon>();
+				ifs >> *pShape;
+				this->savedShapes.push_back(pShape);
+			}
+		}
 		ifs.close();
 		return TRUE;
 	} else
@@ -349,7 +384,8 @@ BOOL CEindOpdrDoc::OnSaveDocument(LPCTSTR lpszPathName)
 
 	std::ofstream ofs (s_wstr, std::ofstream::out);
 	if (ofs) {
-		ofs << *this->selectionDrawShape;
+		for (auto s : this->savedShapes)
+			ofs << *s;
 		ofs.close();
 		return TRUE;
 	} else
