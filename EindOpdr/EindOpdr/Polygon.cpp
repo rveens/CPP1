@@ -17,6 +17,9 @@ void Shapes::Polygon::Draw(CDC *pDC)
 	CPen tp2, tp3;
 	Shapes::Shape::Draw(pDC);
 
+	CBrush b(this->fill);
+	pDC->SelectObject(&b);
+
 	if (this->isSelected) { // pak speciale selectie pen
 		tp2.CreatePenIndirect(&this->selectionPen);
 		pDC->SelectObject(&tp2);

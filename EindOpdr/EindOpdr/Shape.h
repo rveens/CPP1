@@ -35,6 +35,8 @@ namespace Shapes {
 		vector<CPoint> GetPoints();
 		virtual void SetPen(LOGPEN p);
 		void SetLinePen(LOGPEN p);
+		void SetFill(COLORREF b);
+		COLORREF GetFill();
 		void SetText(wstring newstring);
 		wstring GetText();
 		void SetIsSelected(bool newselected);
@@ -55,6 +57,7 @@ namespace Shapes {
 		LOGPEN pen;
 		LOGPEN selectionPen;
 		LOGPEN linePen;
+		COLORREF fill;
 		wstring text;
 		vector<CPoint> points; // usually 0 for start and 1 for end.
 		weak_ptr<Shape> child; // kind shape in de boom van gelinkte nodes.

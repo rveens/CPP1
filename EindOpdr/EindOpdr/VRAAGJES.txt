@@ -3,3 +3,5 @@
 	- Wordt managed C++ nog gebruikt? (dit is toch een heel andere taal?)
 
 - CObject copy en assignment constructors zijn private?
+
+- Waar staat LOG in LOGBRUSH bijv (of LOGPEN) voor?

@@ -13,9 +13,13 @@ void Shapes::Circle::Draw(CDC *pDC)
 {
 	CPen tp2, tp3;
 
+
 	Shapes::Shape::Draw(pDC);
 	if (points.empty())
 		return;
+
+	CBrush b(this->fill);
+	pDC->SelectObject(&b);
 
 	if (this->isSelected) { // pak speciale selectie pen
 		tp2.CreatePenIndirect(&this->selectionPen);

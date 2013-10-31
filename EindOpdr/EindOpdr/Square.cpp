@@ -18,6 +18,9 @@ void Shapes::Square::Draw(CDC *pDC)
 	if (points.empty())
 		return;
 
+	CBrush b(this->fill);
+	pDC->SelectObject(&b);
+
 	if (this->isSelected) { // pak speciale selectie pen
 		tp2.CreatePenIndirect(&this->selectionPen);
 		pDC->SelectObject(&tp2);

@@ -27,25 +27,21 @@
 #define ID_SHAPE_LINESTYLE              32785
 #define ID_LINESTYLE_NORMAL             32786
 #define ID_LINESTYLE_DOTS               32787
-#define ID_BUTTON32788                  32788
 #define ID_TBUTTON_SQUARE               32788
-#define ID_BUTTON32789                  32789
 #define ID_TBUTTON_RECTANGLE            32789
-#define ID_BUTTON32790                  32790
-#define ID_TBUTTON_CIRCLE               32790
-#define ID_BUTTON32791                  32791
-#define ID_TBUTTON_ELLIPSE              32791
-#define ID_BUTTON32792                  32792
 #define ID_TBUTTON_POLYGON              32792
 #define ID_BUTTON32793                  32793
 #define ID_TBUTTON_LINE                 32793
+#define ID_SHAPE_SHAPEFILL              32794
+#define ID_TBUTTON_CIRCLE               32795
+#define ID_TBUTTON_ELLIPSE              32796
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        314
-#define _APS_NEXT_COMMAND_VALUE         32794
+#define _APS_NEXT_COMMAND_VALUE         32797
 #define _APS_NEXT_CONTROL_VALUE         1002
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

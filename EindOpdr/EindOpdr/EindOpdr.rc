@@ -110,6 +110,7 @@ BEGIN
         MENUITEM "Line",                        ID_SHAPE_LINE
         MENUITEM SEPARATOR
         MENUITEM "Shape Color",                 ID_SHAPE_SHAPECOLOR
+        MENUITEM "Shape Fill",                  ID_SHAPE_SHAPEFILL
         MENUITEM "Line Color",                  ID_SHAPE_LINECOLOR
         POPUP "Line Size"
         BEGIN

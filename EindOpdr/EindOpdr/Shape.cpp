@@ -23,6 +23,9 @@ Shapes::Shape::Shape(int id) : id(id), text(L""), isSelected(false)
 	p.x = 2;
 	selectionPen.lopnWidth = p;
 	selectionPen.lopnColor = RGB(255,0,0);
+
+	// Default brush!
+	fill = RGB(255, 255, 255); // white
 }
 
 // regel van drie (rule of three)
@@ -110,6 +113,16 @@ void Shapes::Shape::SetPen(LOGPEN p)
 void Shapes::Shape::SetLinePen(LOGPEN p)
 {
 	this->linePen = p;
+}
+
+void Shapes::Shape::SetFill(COLORREF b)
+{
+	this->fill = b;
+}
+
+COLORREF Shapes::Shape::GetFill()
+{
+	return this->fill;
 }
 
 bool Shapes::Shape::IsOn(CPoint point) const

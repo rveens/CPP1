@@ -63,6 +63,7 @@ BEGIN_MESSAGE_MAP(CEindOpdrView, CView)
 	ON_COMMAND(ID_TBUTTON_POLYGON, &CEindOpdrView::OnToolBarButtonPolygon)
 	ON_COMMAND(ID_TBUTTON_LINE, &CEindOpdrView::OnToolBarButtonLine)
 //	ON_WM_MOUSELEAVE()
+ON_COMMAND(ID_SHAPE_SHAPEFILL, &CEindOpdrView::OnShapeShapefill)
 END_MESSAGE_MAP()
 
 // CEindOpdrView construction/destruction
@@ -525,6 +526,12 @@ void CEindOpdrView::OnShapeLinecolor()
 	this->Invalidate();
 }
 
+void CEindOpdrView::OnShapeShapefill()
+{
+	// TODO: Add your command handler code here
+	this->SetFill();
+}
+
 void CEindOpdrView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	// TODO: Add your message handler code here and/or call default
@@ -619,6 +626,24 @@ void CEindOpdrView::OnEditUndo()
 		return;
 
 	pDoc->DoUndo();
+	this->Invalidate();
+}
+
+void CEindOpdrView::SetFill()
+{
+	// TODO: Add your command handler code here
+	CEindOpdrDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	/* Maak een kleurendialoog */
+	CMFCColorDialog cd;
+
+	if (cd.DoModal() == IDOK) {
+		pDoc->SetFill(cd.GetColor());
+	}
+	pDoc->ChangeShapeColorsSelected();
 	this->Invalidate();
 }
 

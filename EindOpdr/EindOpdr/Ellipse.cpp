@@ -15,6 +15,9 @@ void Shapes::Ellipse::Draw(CDC *pDC)
 {
 	CPen tp2, tp3;
 
+	CBrush b(this->fill);
+	pDC->SelectObject(&b);
+
 	Shapes::Shape::Draw(pDC);
 	if (points.empty())
 		return;

@@ -34,6 +34,7 @@ private:
 	void SetRectangle();
 	void SetSquare();
 	void SetLine();
+	void SetFill();
 	void ResetChosenShapeExceptPolygon(); // clears the chosen shape to draw (menu vinkjes etc)
 
 // Overrides
@@ -86,6 +87,7 @@ public:
 	afx_msg void OnToolBarButtonPolygon();
 	afx_msg void OnToolBarButtonLine();
 //	afx_msg void OnMouseLeave();
+	afx_msg void OnShapeShapefill();
 };
 
 #ifndef _DEBUG  // debug version in EindOpdrView.cpp

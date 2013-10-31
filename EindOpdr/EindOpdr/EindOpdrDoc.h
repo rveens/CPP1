@@ -56,6 +56,7 @@ public:
 	void SetLineThickness(int thinkness);
 	void SetOutLineStyle(int style);
 	void SetLineStyle(int style);
+	void SetFill(COLORREF b);
 	void ChangeShapeColorsSelected();
 	void saveCurrentDrawShape();
 	void MoveSelectedShapes(CPoint p);
@@ -78,6 +79,7 @@ protected:
 	int shapOutLineStyle;
 	int shapeOutLineThickness;
 	COLORREF lineColor;
+	COLORREF fill;
 	int lineStyle;
 	int lineThickness;
 	unsigned int idCounter;

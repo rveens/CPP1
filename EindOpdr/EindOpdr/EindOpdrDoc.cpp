@@ -40,7 +40,7 @@ END_MESSAGE_MAP()
 // CEindOpdrDoc construction/destruction
 
 CEindOpdrDoc::CEindOpdrDoc() : shapeOutLineColor(RGB(0, 0, 0)), shapOutLineStyle(PS_COSMETIC), shapeOutLineThickness(1),
-	lineColor(RGB(0, 0, 0)), lineStyle(PS_DASH), lineThickness(1), idCounter(0)
+	lineColor(RGB(0, 0, 0)), lineStyle(PS_DASH), lineThickness(1), idCounter(0), fill(RGB(255, 255, 255))
 {
 	// TODO: add one-time construction code here
 	savedShapes = std::vector<std::shared_ptr<Shapes::Shape>>();
@@ -232,6 +232,11 @@ void CEindOpdrDoc::SetLineStyle(int style)
 	this->lineStyle = style;
 }
 
+void CEindOpdrDoc::SetFill(COLORREF b)
+{
+	this->fill = b;
+}
+
 void CEindOpdrDoc::ChangeShapeColorsSelected()
 {
 	for_each(begin(this->savedShapes), end(this->savedShapes), [&](std::shared_ptr<Shapes::Shape> s){
@@ -252,6 +257,8 @@ void CEindOpdrDoc::ChangeShapeColorsSelected()
 			p.lopnColor = this->lineColor;
 
 			s->SetLinePen(p);
+
+			s->SetFill(this->fill);
 		}
 	});
 }
@@ -283,6 +290,8 @@ void CEindOpdrDoc::saveCurrentDrawShape()
 		p.lopnColor = this->lineColor;
 		
 		selectionDrawShape->SetLinePen(p);
+
+		selectionDrawShape->SetFill(this->fill);
 
 		// Stel het id in!
 		selectionDrawShape->SetID(this->idCounter++);
