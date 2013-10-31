@@ -217,7 +217,7 @@ ostream &Shapes::Shape::print(ostream &o) const
 	std::string classnamefull(typeid(*this).name());
 	std::string classname = classnamefull.substr(classnamefull.find("::")+2, classnamefull.size()-1);
 
-	// RECT + ' id text <STRINGEND> point.x point.y ... POINTSEND childid isselected penStyle penWidth penColor linePenStyle linePenWidth linepenColor'
+	// RECT + ' id text <STRINGEND> point.x point.y ... POINTSEND childid isselected penStyle penWidth penColor linePenStyle linePenWidth linepenColor fillcolor'
 	o << classname << " " << id << " " << textstring << " STRINGEND ";
 
 	// punten er in stoppen
@@ -235,6 +235,9 @@ ostream &Shapes::Shape::print(ostream &o) const
 	o << linePen.lopnStyle << " ";
 	o << linePen.lopnWidth.x << " ";
 	o << linePen.lopnColor << " ";
+
+	// fillcolor
+	o << fill << " ";
 
 	o << std::endl;
 
@@ -292,6 +295,8 @@ istream &Shapes::Shape::read(istream &is)
 	is >> linePen.lopnStyle;
 	is >> linePen.lopnWidth.x;
 	is >> linePen.lopnColor;
+
+	is >> fill;
 
 	return is;
 }
