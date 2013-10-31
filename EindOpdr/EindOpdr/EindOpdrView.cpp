@@ -121,14 +121,23 @@ void CEindOpdrView::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	pInfo->SetMaxPage(1);
 }
 
-void CEindOpdrView::OnPrint(CDC* pDC, CPrintInfo*)
+void CEindOpdrView::OnPrint(CDC* pDC, CPrintInfo *pInfo)
 {
 	CEindOpdrDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
+	
+	CFont font;
+
+	font.CreatePointFont(1, _T("Arial"));
+	CFont *pFont = pDC->SelectObject(&font);
+
+	pDC->SelectObject(pFont);
+	font.DeleteObject();
 
 	pDoc->DrawSavedShapes(pDC);
+	pInfo->m_bContinuePrinting = FALSE;
 }
 
 void CEindOpdrView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)

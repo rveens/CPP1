@@ -38,7 +38,7 @@ Extra functies (voor extra punten)
 - Lijnkleur en opvulkleur kunnnen per vorm of verbindingslijn worden ingesteld
 x Je kunt geselecteerde objecten verplaatsen (verbindingslijnen gaan dan mee)
 x Je kunt kleur en stijl van geselecteerde objecten wijzigen
-- Je kunt de tekening afdrukken op een printer
+x Je kunt de tekening afdrukken op een printer
 - Je kunt vormen groeperen en loskoppelen
 - Je kunt extra vormen, zoals pijlen, dynamisch toevoegen aan het menu. Staan in een apart bestand
 
@@ -57,3 +57,10 @@ Schrijf duidelijk en zinvol commentaar in je sources
 Gebruik betekenisvolle naamen voor klasses, objecten, methoden en variabelen
 
 Succes
+
+
+Voor 10:
+- Opvulkleur
+- Lijnen trekken
+x Undo stack
+- Print tekst size (opblazen)

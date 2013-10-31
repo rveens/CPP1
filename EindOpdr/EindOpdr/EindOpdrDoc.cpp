@@ -293,34 +293,37 @@ void CEindOpdrDoc::saveCurrentDrawShape()
 
 void CEindOpdrDoc::DoUndo()
 {
-	// draai de huidige 'state' om met de undo versie.
-	
-	// huidige state tijdelijk opslaan
-	std::vector<std::shared_ptr<Shapes::Shape>> tempVector;
-	for_each(begin(this->savedShapes), end(this->savedShapes), [&](std::shared_ptr<Shapes::Shape> s){
-		tempVector.push_back(s->clone());
-	});
+	if (!this->savedShapes.empty())
+		this->savedShapes.pop_back();
 
-	// TODO referenties van lijnen fixen.
-	/*
-	ga door de originele lijst heen,
-	als de shape hij een kind heeft,
-		-> zoek het id van het kind
-		-> zoek de positie van het kind
-		-> maak een referentie in de nieuwe array van het shape (kopie, zelfde pos) naar het kind (kopie)
-	*/
+	//// draai de huidige 'state' om met de undo versie.
+	//
+	//// huidige state tijdelijk opslaan
+	//std::vector<std::shared_ptr<Shapes::Shape>> tempVector;
+	//for_each(begin(this->savedShapes), end(this->savedShapes), [&](std::shared_ptr<Shapes::Shape> s){
+	//	tempVector.push_back(s->clone());
+	//});
 
-	// undo naar de savedshapes.
-	this->savedShapes.clear();
-	for_each(begin(this->savedShapesForUndo), end(this->savedShapesForUndo), [&](std::shared_ptr<Shapes::Shape> s){
-		this->savedShapes.push_back(s->clone());
-	});
+	//// TODO referenties van lijnen fixen.
+	///*
+	//ga door de originele lijst heen,
+	//als de shape hij een kind heeft,
+	//	-> zoek het id van het kind
+	//	-> zoek de positie van het kind
+	//	-> maak een referentie in de nieuwe array van het shape (kopie, zelfde pos) naar het kind (kopie)
+	//*/
 
-	// temp savedshapes naar de undo
-	this->savedShapesForUndo.clear();
-	for_each(begin(tempVector), end(tempVector), [&](std::shared_ptr<Shapes::Shape> s){
-		savedShapesForUndo.push_back(s->clone());
-	});
+	//// undo naar de savedshapes.
+	//this->savedShapes.clear();
+	//for_each(begin(this->savedShapesForUndo), end(this->savedShapesForUndo), [&](std::shared_ptr<Shapes::Shape> s){
+	//	this->savedShapes.push_back(s->clone());
+	//});
+
+	//// temp savedshapes naar de undo
+	//this->savedShapesForUndo.clear();
+	//for_each(begin(tempVector), end(tempVector), [&](std::shared_ptr<Shapes::Shape> s){
+	//	savedShapesForUndo.push_back(s->clone());
+	//});
 }
 
 void CEindOpdrDoc::MoveSelectedShapes(CPoint p)
@@ -393,9 +396,9 @@ BOOL CEindOpdrDoc::OnSaveDocument(LPCTSTR lpszPathName)
 
 	std::ofstream ofs (s_wstr, std::ofstream::out);
 	if (ofs) {
+		ofs << "\xEF\xBB\xBF"; // UTF-8 BOM
 		for (auto s : this->savedShapes)
 			ofs << *s;
-		ofs << "\xEF\xBB\xBF"; // UTF-8 BOM
 		ofs.close();
 		return TRUE;
 	} else
