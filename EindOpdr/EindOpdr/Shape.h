@@ -24,7 +24,6 @@ namespace Shapes {
 		virtual std::shared_ptr<Shape> clone() const = 0;
 		virtual void Draw(CDC *pDC) = 0;
 		virtual bool IsOn(CPoint point) const;
-		virtual std::string toString() const;
 
 		/* virtuele friend operator idoom */
 		friend ostream &operator<<(ostream &os, const Shape &s);

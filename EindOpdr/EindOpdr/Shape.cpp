@@ -102,17 +102,6 @@ vector<CPoint> Shapes::Shape::GetPoints()
 	return this->points;
 }
 
-std::string Shapes::Shape::toString() const
-{
-	std::stringstream ss;
-	
-	ss << "startx: " << this->points[0].x << " starty:" << this->points[0].y << std::endl;
-	ss << "endx: " << this->points[1].x << " endy:" << this->points[1].y << std::endl;
-	//ss << "pen: " << this->pen;
-	
-	return ss.str();
-}
-
 void Shapes::Shape::SetPen(LOGPEN p)
 {
 	this->pen = p;
@@ -189,7 +178,7 @@ ostream &Shapes::Shape::print(ostream &o) const
 	std::string classnamefull(typeid(*this).name());
 	std::string classname = classnamefull.substr(classnamefull.find("::")+2, classnamefull.size()-1);
 
-	// RECT + ' id text points[0].x points[0].y points[1].x points[1].y childid isselected'
+	// RECT + ' id text <STRINGEND> point.x point.y ... POINTSEND childid isselected penStyle penWidth penColor linePenStyle linePenWidth linepenColor'
 	o << classname << " " << id << " " << textstring << " STRINGEND ";
 
 	// punten er in stoppen
@@ -197,7 +186,18 @@ ostream &Shapes::Shape::print(ostream &o) const
 		o << p.x << " ";
 		o << p.y << " ";
 	});
-	o << "POINTSEND " << childid << " " << isSelected << " " << std::endl;
+	o << "POINTSEND " << childid << " " << isSelected << " ";
+	// penStyle penWidth penColor
+	o << pen.lopnStyle << " ";
+	o << pen.lopnWidth.x << " ";
+	o << pen.lopnColor << " ";
+
+	// linePenStyle linePenWidth linePenColor
+	o << linePen.lopnStyle << " ";
+	o << linePen.lopnWidth.x << " ";
+	o << linePen.lopnColor << " ";
+
+	o << std::endl;
 
 	return o;
 }
@@ -243,6 +243,16 @@ istream &Shapes::Shape::read(istream &is)
 
 	is >> s; // TODO childid
 	is >> isSelected;
+
+	// penStyle penWidth penColor
+	is >> pen.lopnStyle;
+	is >> pen.lopnWidth.x;
+	is >> pen.lopnColor;
+
+	// linePenStyle linePenWidth linePenColor
+	is >> linePen.lopnStyle;
+	is >> linePen.lopnWidth.x;
+	is >> linePen.lopnColor;
 
 	return is;
 }

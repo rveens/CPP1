@@ -386,6 +386,7 @@ BOOL CEindOpdrDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	if (ofs) {
 		for (auto s : this->savedShapes)
 			ofs << *s;
+		ofs << "\xEF\xBB\xBF"; // UTF-8 BOM
 		ofs.close();
 		return TRUE;
 	} else
