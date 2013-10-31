@@ -117,6 +117,18 @@ BOOL CEindOpdrView::OnPreparePrinting(CPrintInfo* pInfo)
 void CEindOpdrView::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 {
 	// TODO: add extra initialization before printing
+	pInfo->SetMinPage(1);
+	pInfo->SetMaxPage(1);
+}
+
+void CEindOpdrView::OnPrint(CDC* pDC, CPrintInfo*)
+{
+	CEindOpdrDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	pDoc->DrawSavedShapes(pDC);
 }
 
 void CEindOpdrView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
