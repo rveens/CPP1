@@ -325,10 +325,11 @@ void CEindOpdrDoc::DoUndo()
 
 void CEindOpdrDoc::MoveSelectedShapes(CPoint p)
 {
-	for_each(begin(savedShapes), end(savedShapes), [&](std::shared_ptr<Shapes::Shape> s) {
+	for_each(std::begin(savedShapes), std::end(savedShapes), [&](std::shared_ptr<Shapes::Shape> s) {
 		if (s->GetIsSelected())
 			s->MoveShape(p); // call move function with p
 	});
+	this->ClearSelections();
 }
 
 // CEindOpdrDoc serialization

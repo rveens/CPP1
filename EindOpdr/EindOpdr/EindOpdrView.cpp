@@ -401,7 +401,6 @@ void CEindOpdrView::OnMouseMove(UINT nFlags, CPoint point)
 
 	CDC *pDC = GetDC();
 
-	SetCapture();               //  Capture the mouse input
 	CRect wndRect;
 	GetWindowRect(&wndRect);
 	ScreenToClient(&wndRect);
@@ -409,15 +408,17 @@ void CEindOpdrView::OnMouseMove(UINT nFlags, CPoint point)
 	if (wndRect.PtInRect(point))	
 	{
 		if (GetKeyState(VK_LBUTTON) & 0x80) {
+			SetCapture(); //  Capture the mouse input
 			if (this->viewmode == viewmode::POLYGON)
 				; // niets
 			else
 				pDoc->DrawSelection(pDC, point);
-		}
+		} else
+			ReleaseCapture();
 	} else {
 		if (GetKeyState(VK_LBUTTON) & 0x80) {
 			pDoc->StopSelection();
-			this->Invalidate();
+			this->Invalidate();	
 		}
 		ReleaseCapture();
 	}
